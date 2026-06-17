@@ -3,6 +3,45 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --primary: #CC0D39;
+  --primary-hover: #ad0b30;
+  --primary-dark: #ad0b30;
+  --secondary: #000;
+  --secondary-hover: #000;
+  --secondary-light: #A7BFFE;
+  --title: #000;
+  --bg-light: #FFFAF3;
+  --light-dark: #FEEB9D;
+  --theme-text-color: #000000;
+  --dark: #151F37;
+  --dark-light: #F9F9F9;
+  --rgba-primary-1: rgba(204, 13, 57, .1);
+  --rgba-primary-2: rgba(204, 13, 57, .2);
+  --rgba-primary-3: rgba(204, 13, 57, .3);
+  --rgba-primary-4: rgba(204, 13, 57, .4);
+  --rgba-primary-5: rgba(204, 13, 57, .5);
+  --rgba-primary-6: rgba(204, 13, 57, .6);
+  --rgba-primary-7: rgba(204, 13, 57, .7);
+  --rgba-primary-8: rgba(204, 13, 57, .8);
+  --rgba-primary-9: rgba(204, 13, 57, .9);
+  --gradient1: linear-gradient(307deg, #FEEB9D 1.9%, #FFDFE7 67.57%);
+  --gradient2: linear-gradient(307deg, #FFEA96 1.9%, #FFB0B0 85.96%);
+  --bs-light-rgb: 255, 250, 243;
+
+  --bs-btn-color: #ffffff;
+  --bs-btn-bg: #CC0D39;
+  --bs-btn-border-color: #CC0D39;
+  --bs-btn-hover-color: #ffffff;
+  --bs-btn-hover-bg: rgb(173.4, 11.05, 48.45);
+  --bs-btn-hover-border-color: rgb(163.2, 10.4, 45.6);
+  --bs-btn-focus-shadow-rgb: 212, 49, 87;
+  --bs-btn-active-color: #ffffff;
+  --bs-btn-active-bg: rgb(163.2, 10.4, 45.6);
+  --bs-btn-active-border-color: rgb(153, 9.75, 42.75);
+  --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, .125);
+  --bs-btn-disabled-color: #ffffff;
+  --bs-btn-disabled-bg: #CC0D39;
+  --bs-btn-disabled-border-color: #CC0D39;
 }
 
 @theme inline {
@@ -10,6 +49,7 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --font-inter: var(--font-inter-sans);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -20,7 +60,41 @@
 }
 
 body {
-  background: var(--background);
+  background-color: rgba(var(--bs-light-rgb), 1);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  /*  font-family: Arial, Helvetica, sans-serif;*/
+  font-family: var(--font-inter), sans-serif;
 }
+
+.quickview-thumbs .swiper-slide {
+  opacity: 0.5;
+  transition: opacity 0.3s ease;
+}
+.quickview-thumbs .swiper-slide-thumb-active {
+  opacity: 1;
+}
+
+.product-1 {
+  border-radius: 30px 30px 100px;
+}
+
+.product-2 {
+  border-radius: 30px 30px 30px 100px;
+}
+
+.product-3 {
+  border-radius: 30px 30px 100px;
+}
+
+.product-4 {
+  border-radius: 100px 30px 30px;
+}
+
+.product-5 {
+  border-radius: 100px 30px 30px;
+}
+
+.product-6 {
+  border-radius: 100px 30px 30px;
+}
+
