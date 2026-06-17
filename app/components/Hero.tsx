@@ -1,12 +1,20 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { motion, type Variants } from 'framer-motion';
 import { Sparkles, Heart, ShoppingBasket } from 'lucide-react';
 import Image from 'next/image';
+import Link from 'next/link';
+import type { Store } from '@linkpe-storefront/sdk';
 
-export default function Hero() {
+export default function Hero({ store }: { store?: Store | null }) {
+  const hero = store?.hero;
+  const eyebrow = hero?.show_eyebrow ? hero?.eyebrow : null;
+  const heading = hero?.heading || store?.business_name || 'Your Ultimate Online Store';
+  const subheading = hero?.hide_subheading ? null : hero?.subheading;
+  const ctaLabel = hero?.cta_label || 'Shop Now';
+  const ctaUrl = hero?.cta_url || '/shop';
   // Animation variants for staggering children
-  const containerVariants = {
+  const containerVariants: Variants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
@@ -14,7 +22,7 @@ export default function Hero() {
     }
   };
 
-  const itemVariants = {
+  const itemVariants: Variants = {
     hidden: { opacity: 0, y: 20 },
     visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } }
   };
@@ -29,29 +37,41 @@ export default function Hero() {
         initial="hidden"
         animate="visible"
       >
-        <motion.h1 
+        {eyebrow && (
+          <motion.span
+            variants={itemVariants}
+            className="inline-flex items-center gap-2 text-sm font-bold uppercase tracking-widest text-brand-red mb-4"
+          >
+            <Sparkles className="w-4 h-4" fill="currentColor" /> {eyebrow}
+          </motion.span>
+        )}
+
+        <motion.h1
           variants={itemVariants}
           className="text-5xl lg:text-7xl font-extrabold leading-[1.1] tracking-tight mb-6"
         >
-          Your Ultimate <br />
-          <span className="inline-flex items-center text-brand-red text-[var(--primary)]">
-            <Sparkles className="w-10 h-10 lg:w-14 lg:h-14 mr-2" fill="currentColor" />
-            Online Store
-          </span> <br />
-          for All Your Needs.
+          {heading}
         </motion.h1>
-        
-        <motion.p variants={itemVariants} className="text-lg text-gray-600 mb-8 font-medium">
-          No code need. Plus free shipping on <span className="text-brand-red font-bold">$99+</span> orders!
-        </motion.p>
-        
+
+        {subheading && (
+          <motion.p variants={itemVariants} className="text-lg text-gray-600 mb-8 font-medium">
+            {subheading}
+          </motion.p>
+        )}
+
         <motion.div variants={itemVariants} className="flex flex-wrap gap-4">
-          <button className="px-8 py-3.5 bg-brand-dark text-white text-sm font-bold rounded-full bg-black hover:bg-gray-800 transition-colors">
-            ADD TO CART
-          </button>
-          <button className="px-8 py-3.5 bg-transparent border-2 border-brand-dark text-brand-dark text-sm font-bold rounded-full hover:bg-black hover:text-white transition-colors">
-            VIEW DETAILS
-          </button>
+          <Link
+            href={ctaUrl}
+            className="px-8 py-3.5 bg-brand-dark text-white text-sm font-bold rounded-full bg-black hover:bg-gray-800 transition-colors"
+          >
+            {ctaLabel}
+          </Link>
+          <Link
+            href="/shop"
+            className="px-8 py-3.5 bg-transparent border-2 border-brand-dark text-brand-dark text-sm font-bold rounded-full hover:bg-black hover:text-white transition-colors"
+          >
+            VIEW PRODUCTS
+          </Link>
         </motion.div>
       </motion.div>
 

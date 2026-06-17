@@ -50,6 +50,8 @@
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
   --font-inter: var(--font-inter-sans);
+  /* Used by product UI (text-brand-dark / bg-brand-dark). */
+  --color-brand-dark: #111111;
 }
 
 @media (prefers-color-scheme: dark) {

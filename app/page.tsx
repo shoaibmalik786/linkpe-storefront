@@ -1,4 +1,4 @@
-import Header from './components/Header';
+import SiteHeader from './components/SiteHeader';
 import Hero from './components/Hero';
 import Categories from './components/Categories';
 import Trending from './components/Trending';
@@ -7,21 +7,36 @@ import PopularProducts from './components/PopularProducts';
 import TrustedPartners from './components/TrustedPartners';
 import LatestPosts from './components/LatestPosts';
 import InstagramFeed from './components/InstagramFeed';
-import Footer from './components/Footer';
+import SiteFooter from './components/SiteFooter';
+import { getCategories, getStore, isLinkpeConfigured, listProducts } from '@/lib/linkpe';
 
-export default function Home() {
+export const revalidate = 60;
+
+export default async function Home() {
+  const configured = isLinkpeConfigured();
+
+  // Fetch the storefront data once on the server and pass it to the sections.
+  // Each call is independently guarded so one failure doesn't blank the page.
+  const [store, products, categories] = configured
+    ? await Promise.all([
+        getStore().catch(() => null),
+        listProducts({ limit: 24 }).then((r) => r.data).catch(() => []),
+        getCategories().catch(() => []),
+      ])
+    : [null, [], []];
+
   return (
     <main className="min-h-screen bg-brand-bg text-brand-dark overflow-hidden">
-      <Header /> 
-      <Hero />
-      <Categories /> 
+      <SiteHeader />
+      <Hero store={store} />
+      <Categories categories={categories} products={products} />
       <Trending />
       <VideoBanner />
-      <PopularProducts />
+      <PopularProducts products={products} categories={categories} />
       <TrustedPartners />
       <LatestPosts />
       <InstagramFeed />
-      <Footer />
+      <SiteFooter />
     </main>
   );
 }
