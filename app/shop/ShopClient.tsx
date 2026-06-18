@@ -57,7 +57,7 @@ export default function ShopClient({
   const [selectedCategories, setSelectedCategories] = useState<string[]>(initialCatId ? [initialCatId] : []);
   const [selectedVariants, setSelectedVariants] = useState<Record<string, string[]>>({});
   const [sortBy, setSortBy] = useState<SortKey>('latest');
-  const [itemsPerPage, setItemsPerPage] = useState<number>(9);
+  const [itemsPerPage, setItemsPerPage] = useState<number>(24);
   const [viewMode, setViewMode] = useState<'list' | 'grid' | 'max-grid'>('max-grid');
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -194,7 +194,7 @@ export default function ShopClient({
 
   return (
     <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 mt-8 lg:mt-12 flex flex-col lg:flex-row gap-8 pb-[50px]">
-      <aside className="hidden lg:block w-[280px] shrink-0"><FilterContent /></aside>
+      <aside className="hidden lg:block w-[280px] shrink-0 md:bg-white/50 md:p-4 md:rounded-lg md:h-full md:shadow-lg sticky top-5"><FilterContent /></aside>
 
       <AnimatePresence>
         {isMobileFilterOpen && (
@@ -231,7 +231,7 @@ export default function ShopClient({
               <option value={48}>48 Products</option>
             </select>
             <div className="flex items-center gap-2 text-gray-400">
-              <button onClick={() => setViewMode('list')} className={viewMode === 'list' ? 'text-brand-dark' : 'hover:text-brand-dark transition-colors'}><List size={20} /></button>
+              {/*<button onClick={() => setViewMode('list')} className={viewMode === 'list' ? 'text-brand-dark' : 'hover:text-brand-dark transition-colors'}><List size={20} /></button>*/}
               <button onClick={() => setViewMode('grid')} className={viewMode === 'grid' ? 'text-brand-dark' : 'hover:text-brand-dark transition-colors'}><LayoutGrid size={20} /></button>
               <button onClick={() => setViewMode('max-grid')} className={viewMode === 'max-grid' ? 'text-brand-dark' : 'hover:text-brand-dark transition-colors'}><Grid size={20} /></button>
             </div>

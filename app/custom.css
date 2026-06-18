@@ -228,6 +228,10 @@
     background-position: left;
     background-repeat: no-repeat;
     transform: rotate(180deg);
+
+    @media (max-width: 1023px) {
+      display: none;
+    }
   }
 
   &::after {
@@ -241,5 +245,9 @@
     left: -4%;
     background-position: top;
     background-repeat: no-repeat;
+
+    @media (max-width: 1023px) {
+      display: none;
+    }
   }
 }

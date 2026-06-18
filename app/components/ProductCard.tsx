@@ -25,7 +25,7 @@ export default function ProductCard({ product }: { product: Product }) {
     <div className="flex flex-col">
       <Link
         href={`/product/${handle}`}
-        className="relative group w-full aspect-[4/5] rounded-3xl overflow-hidden mb-4 cursor-pointer block bg-gray-100"
+        className="relative group w-full aspect-[4/5] rounded-3xl overflow-hidden mb-4 cursor-pointer block bg-gray-100 shadow-sm"
       >
         {img ? (
           // eslint-disable-next-line @next/next/no-img-element
@@ -40,14 +40,14 @@ export default function ProductCard({ product }: { product: Product }) {
           </div>
         )}
 
-        <div className="absolute top-4 right-4 flex flex-col gap-2 z-10">
+        {/*<div className="absolute top-4 right-4 flex flex-col gap-2 z-10">
           <span className="w-9 h-9 bg-white/80 backdrop-blur-sm rounded-full flex items-center justify-center text-gray-500 shadow-sm">
             <Heart size={16} />
           </span>
           <span className="w-9 h-9 bg-white/80 backdrop-blur-sm rounded-full flex items-center justify-center text-gray-500 shadow-sm">
             <ShoppingBag size={16} />
           </span>
-        </div>
+        </div>*/}
 
         <div className="absolute bottom-6 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10">
           <span className="bg-brand-dark text-white text-xs font-bold px-6 py-2.5 rounded-full whitespace-nowrap shadow-xl">
