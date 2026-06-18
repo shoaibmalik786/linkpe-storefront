@@ -23,9 +23,9 @@ const row2Logos = [
 
 export default function TrustedPartners() {
   return (
-    <section className="w-full px-4 sm:px-6 lg:px-8 py-10">
+    <section className="w-full px-4 sm:px-6 lg:px-8 py-10 ">
       {/* Container with the warm gradient background */}
-      <div className="max-w-7xl mx-auto rounded-[3rem] overflow-hidden bg-gradient-to-r from-[#ff9a8b] via-[#ffc3a0] to-[#fef08a] py-16 lg:py-24 relative shadow-sm">
+      <div className="max-w-7xl partner_section mx-auto rounded-[3rem] overflow-hidden bg-gradient-to-r from-[#ff9a8b] via-[#ffc3a0] to-[#fef08a] py-16 lg:py-24 relative">
         
         {/* Top Header Section */}
         <div className="px-8 lg:px-16 flex flex-col md:flex-row items-center justify-between gap-8 mb-16 relative z-10">
@@ -35,7 +35,7 @@ export default function TrustedPartners() {
           </h2>
 
           {/* Rotating Black Partner Badge */}
-          <div className="relative w-32 h-32 lg:w-40 lg:h-40 bg-brand-dark rounded-full flex items-center justify-center shrink-0 shadow-xl">
+          <div className="relative w-32 h-32 lg:w-40 lg:h-40 bg-black rounded-full flex items-center justify-center shrink-0 shadow-xl">
             <motion.div 
               animate={{ rotate: 360 }}
               transition={{ repeat: Infinity, duration: 15, ease: "linear" }}
