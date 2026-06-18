@@ -44,7 +44,7 @@ export default function Hero({ store }: { store?: Store | null }) {
             {eyebrow && (
               <motion.span
                 variants={itemVariants}
-                className="mb-4 inline-flex items-center gap-2 text-sm font-bold uppercase tracking-widest text-brand-red"
+                className="mb-4 inline-flex items-center gap-2 text-sm font-bold uppercase tracking-widest text-white/90"
               >
                 <Sparkles className="h-4 w-4" fill="currentColor" /> {eyebrow}
               </motion.span>

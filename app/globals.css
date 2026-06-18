@@ -11,9 +11,9 @@
 
   --background: #ffffff;
   --foreground: #171717;
-  --primary: var(--store-accent);
-  --primary-hover: var(--store-accent);
-  --primary-dark: var(--store-accent);
+  --primary: var(--store-primary);
+  --primary-hover: var(--store-primary);
+  --primary-dark: var(--store-primary);
   --secondary: var(--store-primary);
   --secondary-hover: var(--store-primary);
   --secondary-light: #A7BFFE;
@@ -64,11 +64,11 @@
      app/layout.tsx re-themes the whole UI. */
   --color-brand-primary: var(--store-primary);
   --color-brand-secondary: var(--store-secondary);
-  --color-brand-accent: var(--store-accent);
+  --color-brand-accent: var(--store-primary);
   --color-brand-dark: var(--store-primary);   /* text, headings, dark buttons */
   --color-brand-bg: var(--store-secondary);    /* page / section background */
-  --color-brand-red: var(--store-accent);      /* sale + hover accents */
-  --color-brand-yellow: var(--store-accent);   /* accent surfaces */
+  --color-brand-red: var(--store-primary);      /* sale + hover accents */
+  --color-brand-yellow: var(--store-primary);   /* accent surfaces */
 }
 
 @media (prefers-color-scheme: dark) {

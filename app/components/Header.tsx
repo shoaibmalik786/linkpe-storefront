@@ -47,7 +47,7 @@ export default function Header({ store, categories = [] }: { store?: Store | nul
         <Link href="/" className="flex items-center gap-2 shrink-0">
           {logoUrl ? (
             // eslint-disable-next-line @next/next/no-img-element
-            <img src={logoUrl} alt={storeName} className="h-14 md:h-16 w-auto max-w-[240px] object-contain bg-white rounded-lg" />
+            <img src={logoUrl} alt={storeName} className="h-14 md:h-16 w-auto max-w-[240px] object-contain" />
           ) : (
             <span className="text-2xl md:text-3xl font-extrabold tracking-tight text-white">{storeName}</span>
           )}
@@ -114,9 +114,9 @@ export default function Header({ store, categories = [] }: { store?: Store | nul
 
         {/* Icons — sit on the dark band, so light with an accent hover */}
         <div className="flex items-center gap-5 shrink-0">
-          <Link href="/cart" className="relative text-white hover:text-brand-accent transition-colors">
+          <Link href="/cart" className="relative text-white hover:text-white/70 transition-colors">
             <ShoppingBag size={24} strokeWidth={2} />
-            <span className="absolute -top-2 -right-2 bg-brand-accent text-white text-[10px] font-bold w-[18px] h-[18px] rounded-full flex items-center justify-center">
+            <span className="absolute -top-2 -right-2 bg-white text-brand-dark text-[10px] font-bold w-[18px] h-[18px] rounded-full flex items-center justify-center">
               {count}
             </span>
           </Link>

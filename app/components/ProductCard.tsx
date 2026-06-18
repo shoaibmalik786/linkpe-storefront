@@ -57,7 +57,7 @@ export default function ProductCard({ product }: { product: Product }) {
       </Link>
 
       <div className="flex items-start justify-between gap-4 mt-auto">
-        <Link href={`/product/${handle}`} className="text-brand-dark font-bold text-base leading-tight hover:text-brand-red transition-colors">
+        <Link href={`/product/${handle}`} className="min-w-0 text-brand-dark font-bold text-base leading-tight hover:text-brand-red transition-colors line-clamp-2 break-words" title={product.name}>
           {product.name}
         </Link>
         <div className="shrink-0 text-right">

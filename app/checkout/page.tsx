@@ -40,9 +40,9 @@ export default function CheckoutPage() {
         <div className="relative z-10 text-center text-white px-4">
           <h1 className="text-3xl md:text-5xl font-extrabold mb-4">Shop Checkout</h1>
           <div className="flex items-center justify-center gap-2 text-sm font-medium">
-            <Link href="/" className="hover:text-brand-yellow transition-colors">Home</Link>
+            <Link href="/" className="hover:text-white transition-colors">Home</Link>
             <span>&gt;</span>
-            <span className="text-brand-yellow">Shop Checkout</span>
+            <span className="text-white">Shop Checkout</span>
           </div>
         </div>
       </section>

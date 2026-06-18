@@ -53,8 +53,8 @@ export default function VideoBanner({
         </motion.div>
 
         {/* Center Play Icon */}
-        <div className="relative w-16 h-16 md:w-20 md:h-20 bg-transparent border-2 border-brand-yellow rounded-full flex items-center justify-center transition-transform duration-300 group-hover:scale-110">
-          <Play size={24} className="text-brand-yellow ml-1" fill="currentColor" />
+        <div className="relative w-16 h-16 md:w-20 md:h-20 bg-transparent border-2 border-white rounded-full flex items-center justify-center transition-transform duration-300 group-hover:scale-110">
+          <Play size={24} className="text-white ml-1" fill="currentColor" />
         </div>
       </div>
 
