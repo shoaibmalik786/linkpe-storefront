@@ -36,7 +36,7 @@ export default function Footer({ store, categories = [] }: { store?: Store | nul
             <Link href="/" className="flex items-center gap-2 mb-6">
               {logoUrl ? (
                 // eslint-disable-next-line @next/next/no-img-element
-                <img src={logoUrl} alt={storeName} className="h-12 w-auto max-w-[200px] object-contain bg-white rounded-lg p-1.5" />
+                <img src={logoUrl} alt={storeName} className="h-12 w-auto max-w-[200px] object-contain bg-white" />
               ) : (
                 <span className="text-2xl font-extrabold tracking-tight text-white">{storeName}</span>
               )}

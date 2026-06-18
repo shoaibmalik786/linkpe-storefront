@@ -29,7 +29,7 @@ export default function PopularProducts({
     <section className="w-full bg-brand-bg py-16 lg:py-24">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col lg:flex-row lg:items-center justify-between mb-12 gap-6">
-          <h2 className="text-3xl lg:text-4xl font-extrabold text-brand-dark">Most Popular Products</h2>
+          <h2 className="text-3xl lg:text-4xl font-extrabold text-brand-dark">Shop the Collection</h2>
 
           {tabs.length > 1 && (
             <div className="flex items-center gap-2 overflow-x-auto pb-2 lg:pb-0 hide-scrollbar">

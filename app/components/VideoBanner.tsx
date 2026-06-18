@@ -3,10 +3,21 @@
 import { motion } from 'framer-motion';
 import { Play } from 'lucide-react';
 
-// The items for our continuous marquee
-const marqueeItems = ['T-SHIRT', 'BLAZER', 'JACKET', 'JEANS', 'SHIRTS', 'SHORTS', 'DRESSES'];
+// Fallback marquee items when the store has no categories yet.
+const fallbackItems = ['T-SHIRT', 'BLAZER', 'JACKET', 'JEANS', 'SHIRTS', 'SHORTS', 'DRESSES'];
 
-export default function VideoBanner() {
+export default function VideoBanner({
+  categories = [],
+  storeName = 'Shop',
+  bannerUrl = null,
+}: {
+  categories?: { name: string }[];
+  storeName?: string;
+  bannerUrl?: string | null;
+}) {
+  const marqueeItems = categories.length ? categories.map((c) => c.name.toUpperCase()) : fallbackItems;
+  // Repeat the store name around the rotating ring.
+  const ringText = `${storeName.toUpperCase()} - `.repeat(3);
   return (
     <section className="relative w-full h-[400px] md:h-[500px] lg:h-[600px] flex items-center justify-center mt-10">
       
@@ -14,9 +25,9 @@ export default function VideoBanner() {
       <div 
         className="absolute inset-0 w-full h-full bg-cover bg-center bg-no-repeat bg-fixed"
         // Replace this inline style with your actual image path once you have it
-        style={{ 
-          backgroundImage: 'url("/images/bg2.jpg")',
-          backgroundColor: '#d1bfae' // Fallback color matching the vibe
+        style={{
+          backgroundImage: `url("${bannerUrl || '/images/bg2.jpg'}")`,
+          backgroundColor: '#d1bfae', // Fallback color matching the vibe
         }}
       >
         {/* Subtle overlay to ensure the center button pops */}
@@ -35,7 +46,7 @@ export default function VideoBanner() {
             <path id="shopCirclePath" d="M 50, 50 m -32, 0 a 32,32 0 1,1 64,0 a 32,32 0 1,1 -64,0" fill="transparent" />
             <text className="text-[11px] font-bold tracking-widest uppercase text-brand-dark">
               <textPath href="#shopCirclePath" startOffset="0%">
-                - SHOP - SHOP - SHOP - SHOP
+                {ringText}
               </textPath>
             </text>
           </svg>
