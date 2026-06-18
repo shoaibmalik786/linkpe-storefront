@@ -46,7 +46,7 @@ export default function LatestPosts() {
               Discover the most trending products in Pixio.
             </p>
           </div>
-          <button className="bg-brand-dark text-white px-8 py-3 rounded-full font-bold text-sm hover:bg-gray-800 transition-colors shrink-0 shadow-md">
+          <button className="bg-black cursor-pointer text-white px-8 py-3 rounded-full font-bold text-sm hover:bg-gray-800 transition-colors shrink-0 shadow-md">
             View All
           </button>
         </div>
@@ -60,21 +60,19 @@ export default function LatestPosts() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-50px" }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="flex items-center gap-6 group cursor-pointer"
+              className="flex items-center gap-6 group cursor-pointer bg-white rounded-[2rem] px-6 pt-6"
             >
               
               {/* Circular Image Container */}
-              <div className="shrink-0 w-32 h-32 sm:w-40 sm:h-40 md:w-48 md:h-48 rounded-full overflow-hidden shadow-sm relative">
+              <div className="shrink-0 w-32 h-32 sm:w-50 sm:h-50 md:w-60 md:h-60 rounded-t-[150px] overflow-hidden shadow-sm relative">
                 {/* Replace this div with a Next.js Image component when you have the assets */}
-                <div className={`w-full h-full ${post.color} transition-transform duration-700 group-hover:scale-110 flex items-center justify-center text-black/20 text-sm font-bold`}>
-                  Image
-                </div>
+                <img src="https://pixio-react.vercel.app/assets/pic1-CkG-zlPz.jpg"  className="w-full h-full object-cover" />
               </div>
 
               {/* Content Area */}
               <div className="flex flex-col items-start flex-1">
                 {/* Date Badge */}
-                <div className="bg-brand-dark text-white text-[10px] sm:text-xs font-bold px-3 py-1.5 rounded-sm mb-3 uppercase tracking-wider">
+                <div className="bg-black text-white text-[10px] sm:text-xs font-bold px-3 py-1.5 rounded-sm mb-3 uppercase tracking-wider">
                   {post.date}
                 </div>
                 
@@ -84,7 +82,7 @@ export default function LatestPosts() {
                 </h3>
                 
                 {/* Read More Button */}
-                <button className="flex items-center gap-2 border-2 border-gray-200 text-brand-dark px-5 py-2.5 rounded-full text-xs font-bold group-hover:bg-brand-dark group-hover:border-brand-dark group-hover:text-white transition-all">
+                <button className="flex items-center gap-2 border-2 border-gray-200 text-brand-dark px-5 py-2.5 rounded-full text-xs font-bold group-hover:bg-black group-hover:border-brand-dark group-hover:text-white transition-all">
                   READ MORE
                   <ArrowRight size={14} strokeWidth={2.5} />
                 </button>

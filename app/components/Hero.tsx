@@ -46,7 +46,7 @@ export default function Hero() {
         </motion.p>
         
         <motion.div variants={itemVariants} className="flex flex-wrap gap-4">
-          <button className="px-8 py-3.5 bg-brand-dark text-white text-sm font-bold rounded-full bg-black hover:bg-gray-800 transition-colors">
+          <button className="px-8 py-3.5 bg-black text-white text-sm font-bold rounded-full bg-black hover:bg-gray-800 transition-colors">
             ADD TO CART
           </button>
           <button className="px-8 py-3.5 bg-transparent border-2 border-brand-dark text-brand-dark text-sm font-bold rounded-full hover:bg-black hover:text-white transition-colors">

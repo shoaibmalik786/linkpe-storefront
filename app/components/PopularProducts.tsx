@@ -6,14 +6,14 @@ import { Heart, ShoppingBag } from 'lucide-react';
 
 // Mock data with categories for the tab filter
 const products = [
-  { id: 1, name: 'Cozy Knit Cardigan Sweater', price: 80, discount: '20% OFF', category: 'Outerwear', color: 'bg-[#b886c1]' },
-  { id: 2, name: 'Sophisticated Swagger Suit', price: 70, discount: '10% OFF', category: 'Outerwear', color: 'bg-[#5c7a9c]' },
-  { id: 3, name: 'Classic Denim Skinny Jeans', price: 50, discount: '15% OFF', category: 'Jeans', color: 'bg-[#6b8cce]' },
-  { id: 4, name: 'Athletic Mesh Sports Leggings', price: 30, discount: '40% OFF', category: 'Tops', color: 'bg-[#d97c36]' },
-  { id: 5, name: 'Vintage Denim Overalls', price: 55, discount: '25% OFF', category: 'Dresses', color: 'bg-[#e2a8b8]' },
-  { id: 6, name: 'Satin Wrap Party Blouse', price: 65, discount: '30% OFF', category: 'Tops', color: 'bg-[#e27c94]' },
-  { id: 7, name: 'Plaid Wool Winter Coat', price: 35, discount: '15% OFF', category: 'Jacket', color: 'bg-[#b4c5c2]' },
-  { id: 8, name: 'Water-Resistant Windbreaker', price: 75, discount: '25% OFF', category: 'Jacket', color: 'bg-[#e6b3a3]' },
+  { id: 1, name: 'Cozy Knit Cardigan Sweater', price: 80, discount: '20% OFF', category: 'Outerwear', color: 'bg-[#b886c1]', img: "https://pixio-react.vercel.app/assets/3-DFzNmbxq.png" },
+  { id: 2, name: 'Sophisticated Swagger Suit', price: 70, discount: '10% OFF', category: 'Outerwear', color: 'bg-[#5c7a9c]', img: "https://pixio-react.vercel.app/assets/3-DFzNmbxq.png" },
+  { id: 3, name: 'Classic Denim Skinny Jeans', price: 50, discount: '15% OFF', category: 'Jeans', color: 'bg-[#6b8cce]', img: "https://pixio-react.vercel.app/assets/3-DFzNmbxq.png" },
+  { id: 4, name: 'Athletic Mesh Sports Leggings', price: 30, discount: '40% OFF', category: 'Tops', color: 'bg-[#d97c36]', img: "https://pixio-react.vercel.app/assets/3-DFzNmbxq.png" },
+  { id: 5, name: 'Vintage Denim Overalls', price: 55, discount: '25% OFF', category: 'Dresses', color: 'bg-[#e2a8b8]', img: "https://pixio-react.vercel.app/assets/3-DFzNmbxq.png" },
+  { id: 6, name: 'Satin Wrap Party Blouse', price: 65, discount: '30% OFF', category: 'Tops', color: 'bg-[#e27c94]', img: "https://pixio-react.vercel.app/assets/3-DFzNmbxq.png" },
+  { id: 7, name: 'Plaid Wool Winter Coat', price: 35, discount: '15% OFF', category: 'Jacket', color: 'bg-[#b4c5c2]', img: "https://pixio-react.vercel.app/assets/3-DFzNmbxq.png" },
+  { id: 8, name: 'Water-Resistant Windbreaker', price: 75, discount: '25% OFF', category: 'Jacket', color: 'bg-[#e6b3a3]', img: "https://pixio-react.vercel.app/assets/3-DFzNmbxq.png" },
 ];
 
 const tabs = ['ALL', 'Dresses', 'Tops', 'Outerwear', 'Jacket'];
@@ -42,9 +42,9 @@ export default function PopularProducts() {
               <button
                 key={tab}
                 onClick={() => setActiveTab(tab)}
-                className={`px-6 py-2.5 rounded-full text-sm font-bold whitespace-nowrap transition-colors duration-300 ${
+                className={`px-6 py-2.5 cursor-pointer rounded-full text-sm font-bold whitespace-nowrap transition-colors duration-300 ${
                   activeTab === tab 
-                    ? 'bg-brand-dark text-white shadow-md' 
+                    ? 'bg-black text-white shadow-md' 
                     : 'bg-transparent text-brand-dark hover:bg-gray-200'
                 }`}
               >
@@ -70,7 +70,12 @@ export default function PopularProducts() {
                 {/* Product Image Card */}
                 <div className="relative group w-full aspect-[4/5] rounded-3xl overflow-hidden mb-4 cursor-pointer">
                   {/* Image Placeholder */}
-                  <div className={`w-full h-full ${product.color} transition-transform duration-700 group-hover:scale-105`}></div>
+                  {/*<div className={`w-full h-full ${product.color} transition-transform duration-700 group-hover:scale-105`}></div>*/}
+                  <img
+                    src={product.img}
+                    alt={product.name} 
+                    className="object-cover h-full w-full group-hover:scale-105 transition-transform duration-500" 
+                  />
                   
                   {/* Top Left Discount Badge */}
                   {product.discount && (
@@ -91,7 +96,7 @@ export default function PopularProducts() {
 
                   {/* Hover "Quick View" Button */}
                   <div className="absolute bottom-6 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10">
-                    <button className="bg-brand-dark text-white text-xs font-bold px-6 py-2.5 rounded-full whitespace-nowrap shadow-xl hover:bg-gray-800">
+                    <button className="bg-black text-white text-xs font-bold px-6 py-2.5 rounded-full whitespace-nowrap shadow-xl hover:bg-gray-800">
                       QUICK VIEW
                     </button>
                   </div>

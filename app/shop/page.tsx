@@ -304,7 +304,7 @@ export default function ShopPage() {
               {/* Mobile Filter Button */}
               <button 
                 onClick={() => setIsMobileFilterOpen(true)}
-                className="lg:hidden flex items-center gap-2 bg-brand-dark text-black px-4 py-2 rounded-full text-xs font-bold shadow-md hover:bg-gray-800 transition-colors ml-4"
+                className="lg:hidden flex items-center gap-2 bg-black text-black px-4 py-2 rounded-full text-xs font-bold shadow-md hover:bg-gray-800 transition-colors ml-4"
               >
                 <SlidersHorizontal size={14} /> FILTERS
               </button>

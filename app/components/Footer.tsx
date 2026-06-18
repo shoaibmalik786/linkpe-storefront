@@ -5,9 +5,9 @@ import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
 
 const recentPosts = [
-  { id: 1, title: 'Cozy Knit Cardigan Sweater', date: 'Jan 23, 2025', color: 'bg-purple-300' },
-  { id: 2, title: 'Sophisticated Swagger Suit', date: 'Jan 23, 2025', color: 'bg-blue-300' },
-  { id: 3, title: 'Athletic Mesh Sports Leggings', date: 'Jan 23, 2025', color: 'bg-orange-300' },
+  { id: 1, title: 'Cozy Knit Cardigan Sweater', date: 'Jan 23, 2025', color: 'bg-purple-300', img: 'https://pixio-react.vercel.app/assets/1-Cx9eAfJp.png' },
+  { id: 2, title: 'Sophisticated Swagger Suit', date: 'Jan 23, 2025', color: 'bg-blue-300', img: 'https://pixio-react.vercel.app/assets/2-D-31DoBL.png' },
+  { id: 3, title: 'Athletic Mesh Sports Leggings', date: 'Jan 23, 2025', color: 'bg-orange-300', img: ' https://pixio-react.vercel.app/assets/3-B3tJCLiH.png' },
 ];
 
 const stores = ['New York', 'London SF', 'Edinburgh', 'Los Angeles', 'Chicago', 'Las Vegas'];
@@ -70,7 +70,7 @@ export default function Footer() {
             <div className="flex flex-col gap-4">
               {recentPosts.map((post) => (
                 <div key={post.id} className="flex items-center gap-4 group cursor-pointer">
-                  <div className={`w-14 h-14 rounded-xl ${post.color} shrink-0 group-hover:scale-105 transition-transform`}></div>
+                  <img src={post.img} className="w-14 h-14 rounded-[8px] group-hover:scale-105 transition-transform" />
                   <div>
                     <h5 className="text-sm font-extrabold text-brand-dark leading-tight group-hover:text-brand-red transition-colors">
                       {post.title}
@@ -155,11 +155,7 @@ export default function Footer() {
           {/* Payment Methods (Simulated with simple pills for exact visual match) */}
           <div className="flex items-center gap-2">
             <span className="text-sm font-extrabold text-brand-dark mr-2">We Accept:</span>
-            {['bg-blue-800', 'bg-red-500', 'bg-orange-500', 'bg-blue-400', 'bg-blue-600'].map((color, i) => (
-              <div key={i} className="w-10 h-6 bg-white border border-gray-200 rounded flex items-center justify-center overflow-hidden">
-                <div className={`w-full h-2 ${color}`}></div>
-              </div>
-            ))}
+            <img src="/images/card.png" alt="img" />
           </div>
         </div>
 

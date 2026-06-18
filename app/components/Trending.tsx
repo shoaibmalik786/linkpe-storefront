@@ -10,11 +10,11 @@ import 'swiper/css/free-mode';
 
 // Mock data based on your screenshots
 const trendingProducts = [
-  { id: 1, name: 'Cozy Knit Cardigan Sweater', price: 78, discount: '20% OFF', color: 'bg-[#b886c1]' }, // Purple
-  { id: 2, name: 'Sophisticated Swagger Suit', price: 63, discount: '20% OFF', color: 'bg-[#5c7a9c]' }, // Blue
-  { id: 3, name: 'Classic Denim Skinny Jeans', price: 75, discount: '20% OFF', color: 'bg-[#d887b4]' }, // Pink
-  { id: 4, name: 'Athletic Mesh Sports Leggings', price: 74, discount: '20% OFF', color: 'bg-[#d97c36]' }, // Orange
-  { id: 5, name: 'Vintage Denim Overalls', price: 55, discount: '25% OFF', color: 'bg-[#e2a8b8]' },
+  { id: 1, name: 'Cozy Knit Cardigan Sweater', price: 78, discount: '20% OFF', color: 'bg-[#b886c1]', img: "https://pixio-react.vercel.app/assets/3-DFzNmbxq.png" }, // Purple
+  { id: 2, name: 'Sophisticated Swagger Suit', price: 63, discount: '20% OFF', color: 'bg-[#5c7a9c]', img: "https://pixio-react.vercel.app/assets/3-DFzNmbxq.png" }, // Blue
+  { id: 3, name: 'Classic Denim Skinny Jeans', price: 75, discount: '20% OFF', color: 'bg-[#d887b4]', img: "https://pixio-react.vercel.app/assets/3-DFzNmbxq.png" }, // Pink
+  { id: 4, name: 'Athletic Mesh Sports Leggings', price: 74, discount: '20% OFF', color: 'bg-[#d97c36]', img: "https://pixio-react.vercel.app/assets/3-DFzNmbxq.png" }, // Orange
+  { id: 5, name: 'Vintage Denim Overalls', price: 55, discount: '25% OFF', color: 'bg-[#e2a8b8]', img: "https://pixio-react.vercel.app/assets/3-DFzNmbxq.png" },
 ];
 
 export default function Trending() {
@@ -32,7 +32,7 @@ export default function Trending() {
               Discover the most trending products in Pixio.
             </p>
           </div>
-          <button className="bg-brand-dark text-white px-8 py-3 rounded-full font-bold text-sm hover:bg-gray-800 transition-colors shrink-0">
+          <button className="bg-black text-white px-8 py-3 rounded-full font-bold text-sm hover:bg-gray-800 transition-colors shrink-0">
             View All
           </button>
         </div>
@@ -57,7 +57,12 @@ export default function Trending() {
                 {/* Product Image Card */}
                 <div className="relative group w-full aspect-[4/5] rounded-3xl overflow-hidden mb-4 cursor-pointer">
                   {/* Placeholder for Image - Replace with next/image */}
-                  <div className={`w-full h-full ${product.color} transition-transform duration-700 group-hover:scale-105`}></div>
+                  {/*<div className={`w-full h-full ${product.color} transition-transform duration-700 group-hover:scale-105`}></div>*/}
+                  <img
+                    src={product.img}
+                    alt={product.name} 
+                    className="object-cover h-full w-full group-hover:scale-105 transition-transform duration-500" 
+                  />
                   
                   {/* Top Left Discount Badge */}
                   {product.discount && (
@@ -78,7 +83,7 @@ export default function Trending() {
 
                   {/* Hover "Quick View" Button */}
                   <div className="absolute bottom-6 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10">
-                    <button className="bg-brand-dark text-white text-xs font-bold px-6 py-2.5 rounded-full whitespace-nowrap shadow-xl hover:bg-gray-800">
+                    <button className="bg-black text-white text-xs font-bold px-6 py-2.5 rounded-full whitespace-nowrap shadow-xl hover:bg-gray-800">
                       QUICK VIEW
                     </button>
                   </div>
