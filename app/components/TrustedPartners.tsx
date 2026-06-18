@@ -68,13 +68,13 @@ export default function TrustedPartners({
 
   return (
     <section className="w-full px-4 sm:px-6 lg:px-8 py-10 ">
-      <div className="max-w-7xl partner_section mx-auto rounded-[3rem] overflow-hidden bg-gradient-to-r from-[#ff9a8b] via-[#ffc3a0] to-[#fef08a] py-16 lg:py-24 relative">
+      <div className="max-w-7xl partner_section mx-auto rounded-[3rem] overflow-hidden bg-brand-dark py-16 lg:py-24 relative">
         <div className="px-8 lg:px-16 flex flex-col md:flex-row items-center justify-between gap-8 mb-16 relative z-10">
           <h2 className="text-4xl lg:text-5xl font-extrabold text-white leading-tight max-w-xl text-center md:text-left drop-shadow-sm">
             {heading}
           </h2>
 
-          <div className="relative w-32 h-32 lg:w-40 lg:h-40 bg-black rounded-full flex items-center justify-center shrink-0 shadow-xl">
+          <div className="relative w-32 h-32 lg:w-40 lg:h-40 bg-white rounded-full flex items-center justify-center shrink-0 shadow-xl">
             <motion.div
               animate={{ rotate: 360 }}
               transition={{ repeat: Infinity, duration: 15, ease: 'linear' }}
@@ -82,7 +82,7 @@ export default function TrustedPartners({
             >
               <svg viewBox="0 0 100 100" className="w-[85%] h-[85%] overflow-visible">
                 <path id="partnerCircle" d="M 50, 50 m -34, 0 a 34,34 0 1,1 68,0 a 34,34 0 1,1 -68,0" fill="transparent" />
-                <text className="text-[12px] font-bold tracking-widest uppercase text-white fill-current">
+                <text className="text-[12px] font-bold tracking-widest uppercase text-brand-dark fill-current">
                   <textPath href="#partnerCircle" startOffset="0%">
                     {`${badgeWord} • ${badgeWord} • `}
                   </textPath>
@@ -90,7 +90,7 @@ export default function TrustedPartners({
               </svg>
             </motion.div>
 
-            <div className="text-white">
+            <div className="text-brand-dark">
               <svg width="40" height="40" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M12 0L14.59 9.41L24 12L14.59 14.59L12 24L9.41 14.59L0 12L9.41 9.41L12 0Z" />
               </svg>
