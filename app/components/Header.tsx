@@ -1,8 +1,8 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { Search, ChevronDown, Menu, Heart, ShoppingBag } from 'lucide-react';
+import { Search, ChevronDown, Heart, ShoppingBag } from 'lucide-react';
 import Link from 'next/link';
 import type { Store, Category } from '@linkpe-storefront/sdk';
 import { cartCount, CART_CHANGED_EVENT } from '@/lib/cart';
@@ -11,9 +11,8 @@ export default function Header({ store, categories = [] }: { store?: Store | nul
   const router = useRouter();
   const [query, setQuery] = useState('');
   const [catOpen, setCatOpen] = useState(false);
-  const [browseOpen, setBrowseOpen] = useState(false);
+  const [selectedCat, setSelectedCat] = useState<Category | null>(null);
   const [count, setCount] = useState(0);
-  const catRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const update = () => setCount(cartCount());
@@ -28,8 +27,12 @@ export default function Header({ store, categories = [] }: { store?: Store | nul
 
   function submitSearch(e: React.FormEvent) {
     e.preventDefault();
+    const params = new URLSearchParams();
+    if (selectedCat) params.set('category', selectedCat.slug);
     const q = query.trim();
-    router.push(q ? `/shop?search=${encodeURIComponent(q)}` : '/shop');
+    if (q) params.set('search', q);
+    const qs = params.toString();
+    router.push(qs ? `/shop?${qs}` : '/shop');
   }
 
   const showSupport = !!store?.contact?.phone;
@@ -50,38 +53,62 @@ export default function Header({ store, categories = [] }: { store?: Store | nul
           )}
         </Link>
 
-        {/* Search */}
-        <form onSubmit={submitSearch} className="hidden lg:flex flex-1 max-w-2xl border border-gray-300 rounded-full overflow-hidden bg-white items-center h-14 shadow-sm">
+        {/* Search — white pill with a working category scope + accent submit */}
+        <form
+          onSubmit={submitSearch}
+          className="hidden lg:flex flex-1 max-w-2xl items-center h-14 rounded-full bg-white pr-1.5 shadow-[0_10px_30px_rgba(0,0,0,0.28)] ring-1 ring-black/5"
+        >
           <div className="relative h-full">
             <button
               type="button"
               onClick={() => setCatOpen((o) => !o)}
-              className="flex items-center gap-2 px-5 h-full text-sm font-medium text-gray-700 hover:text-brand-dark bg-gray-50 border-r border-gray-300 transition-colors"
+              className="flex items-center gap-2 h-full pl-6 pr-4 text-sm font-semibold text-brand-dark rounded-l-full hover:bg-gray-50 transition-colors"
             >
-              All Categories <ChevronDown size={16} className="text-gray-400" />
+              <span className="max-w-[150px] truncate">{selectedCat?.name ?? 'All Categories'}</span>
+              <ChevronDown size={16} className={`text-gray-400 transition-transform ${catOpen ? 'rotate-180' : ''}`} />
             </button>
-            {catOpen && categories.length > 0 && (
+            {catOpen && (
               <>
                 <div className="fixed inset-0 z-10" onClick={() => setCatOpen(false)} />
-                <div ref={catRef} className="absolute top-full left-0 mt-2 w-56 bg-white rounded-xl shadow-xl border border-gray-100 py-2 z-20 max-h-80 overflow-y-auto">
+                <div className="absolute top-[calc(100%+0.75rem)] left-0 w-60 bg-white rounded-2xl shadow-xl border border-gray-100 py-2 z-20 max-h-80 overflow-y-auto">
+                  <button
+                    type="button"
+                    onClick={() => { setSelectedCat(null); setCatOpen(false); }}
+                    className={`block w-full text-left px-4 py-2.5 text-sm hover:bg-gray-50 ${!selectedCat ? 'text-brand-accent font-semibold' : 'text-brand-dark'}`}
+                  >
+                    All Categories
+                  </button>
                   {categories.map((c) => (
-                    <Link key={c.id} href={`/shop?category=${encodeURIComponent(c.slug)}`} onClick={() => setCatOpen(false)} className="block px-4 py-2 text-sm text-brand-dark hover:bg-gray-50">
+                    <button
+                      key={c.id}
+                      type="button"
+                      onClick={() => { setSelectedCat(c); setCatOpen(false); }}
+                      className={`block w-full text-left px-4 py-2.5 text-sm hover:bg-gray-50 ${selectedCat?.id === c.id ? 'text-brand-accent font-semibold' : 'text-brand-dark'}`}
+                    >
                       {c.name}
-                    </Link>
+                    </button>
                   ))}
                 </div>
               </>
             )}
           </div>
+
+          <span className="h-7 w-px bg-gray-200 shrink-0" />
+
           <input
             type="text"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Search for products"
-            className="flex-1 px-5 h-full outline-none text-sm text-brand-dark placeholder-gray-400"
+            className="flex-1 px-5 h-full outline-none text-sm text-brand-dark placeholder-gray-400 bg-transparent"
           />
-          <button type="submit" className="px-5 h-full text-gray-500 hover:text-brand-dark transition-colors bg-white">
-            <Search size={20} />
+
+          <button
+            type="submit"
+            aria-label="Search"
+            className="h-11 w-11 rounded-full bg-brand-accent text-white flex items-center justify-center hover:opacity-90 transition-opacity shrink-0"
+          >
+            <Search size={18} />
           </button>
         </form>
 

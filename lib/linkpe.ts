@@ -53,8 +53,12 @@ export const getStore = cache(async (): Promise<Store> => {
   return linkpe().store.get();
 });
 
-export const getCategories = cache(async (): Promise<Category[]> => {
-  return linkpe().categories.list();
+// The API returns a representative `image_url` per category; the installed SDK
+// type may not declare it yet, so widen it here.
+export type StoreCategory = Category & { image_url?: string | null };
+
+export const getCategories = cache(async (): Promise<StoreCategory[]> => {
+  return (await linkpe().categories.list()) as StoreCategory[];
 });
 
 export const listProducts = cache(async (params: ProductListParams = {}): Promise<ProductListResult> => {

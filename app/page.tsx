@@ -27,7 +27,7 @@ export default async function Home() {
     <main className="min-h-screen bg-brand-bg text-brand-dark overflow-hidden">
       <SiteHeader />
       <Hero store={store} />
-      <Categories categories={categories} products={products} />
+      <Categories categories={categories} />
       <Trending />
       <VideoBanner />
       <PopularProducts products={products} categories={categories} />

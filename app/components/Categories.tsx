@@ -3,23 +3,10 @@
 import { motion } from 'framer-motion';
 import { ArrowDown } from 'lucide-react';
 import Link from 'next/link';
-import type { Category, Product } from '@linkpe-storefront/sdk';
+import type { StoreCategory } from '@/lib/linkpe';
 
-export default function Categories({
-  categories,
-  products,
-}: {
-  categories: Category[];
-  products: Product[];
-}) {
+export default function Categories({ categories }: { categories: StoreCategory[] }) {
   if (!categories.length) return null;
-
-  // Use the first product in each category as its tile image.
-  const imageFor = (categoryId: string): string | null => {
-    const p = products.find((x) => x.category_id === categoryId);
-    if (!p) return null;
-    return (p.images ?? []).slice().sort((a, b) => a.display_order - b.display_order)[0]?.url ?? p.image_url ?? null;
-  };
 
   return (
     <section className="relative w-full bg-brand-accent py-20 lg:py-32 rounded-t-[3rem] -mt-10 z-20">
@@ -46,7 +33,7 @@ export default function Categories({
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-8">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
           {categories.map((cat, index) => {
-            const img = imageFor(cat.id);
+            const img = cat.image_url ?? null;
             return (
               <motion.div
                 key={cat.id}
