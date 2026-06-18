@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { Search, Headset, ChevronDown, Menu, User, Heart, ShoppingBag } from 'lucide-react';
+import { Search, ChevronDown, Menu, Heart, ShoppingBag } from 'lucide-react';
 import Link from 'next/link';
 import type { Store, Category } from '@linkpe-storefront/sdk';
 import { cartCount, CART_CHANGED_EVENT } from '@/lib/cart';
@@ -38,20 +38,15 @@ export default function Header({ store, categories = [] }: { store?: Store | nul
 
   return (
     <header className="w-full bg-brand-bg relative z-50">
-      {/* Top Bar */}
-      <div className="mx-auto px-4 sm:px-6 lg:px-8 py-4 border-b border-gray-200 flex items-center justify-between gap-4 bg-[var(--light-dark)]">
-        {/* Logo */}
+      {/* Top Bar — primary-colored band */}
+      <div className="mx-auto px-4 sm:px-6 lg:px-8 py-4 border-b border-white/10 flex items-center justify-between gap-4 bg-brand-dark text-white">
+        {/* Logo — sits on a white plaque so it stays visible on the dark band */}
         <Link href="/" className="flex items-center gap-2 shrink-0">
           {logoUrl ? (
             // eslint-disable-next-line @next/next/no-img-element
-            <img src={logoUrl} alt={storeName} className="h-9 w-auto max-w-[160px] object-contain" />
+            <img src={logoUrl} alt={storeName} className="h-14 md:h-16 w-auto max-w-[240px] object-contain bg-white rounded-lg" />
           ) : (
-            <>
-              <div className="w-8 h-8 bg-brand-yellow rounded-full flex items-center justify-center">
-                <span className="font-extrabold text-brand-dark text-lg leading-none">{storeName.charAt(0).toUpperCase()}</span>
-              </div>
-              <span className="text-2xl font-extrabold tracking-tight text-brand-dark">{storeName}</span>
-            </>
+            <span className="text-2xl md:text-3xl font-extrabold tracking-tight text-white">{storeName}</span>
           )}
         </Link>
 
@@ -90,28 +85,24 @@ export default function Header({ store, categories = [] }: { store?: Store | nul
           </button>
         </form>
 
-        {/* Support */}
-        {showSupport && (
-          <div className="hidden md:flex items-center gap-3 shrink-0">
-            <div className="w-10 h-10 bg-yellow-100 rounded-full flex items-center justify-center">
-              <Headset size={20} className="text-yellow-600" />
-            </div>
-            <div className="flex flex-col justify-center">
-              <span className="text-[10px] text-gray-500 font-bold tracking-wider">SUPPORT</span>
-              <a href={`tel:${store?.contact?.phone}`} className="text-sm font-extrabold text-brand-dark">{store?.contact?.phone}</a>
-            </div>
-          </div>
-        )}
+        {/* Icons — sit on the dark band, so light with an accent hover */}
+        <div className="flex items-center gap-5 shrink-0">
+          <Link href="/cart" className="relative text-white hover:text-brand-accent transition-colors">
+            <ShoppingBag size={24} strokeWidth={2} />
+            <span className="absolute -top-2 -right-2 bg-brand-accent text-white text-[10px] font-bold w-[18px] h-[18px] rounded-full flex items-center justify-center">
+              {count}
+            </span>
+          </Link>
+        </div>
       </div>
 
       {/* Bottom Bar */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between flex-col md:flex-row gap-4 md:gap-0">
-        {/* Browse Categories */}
+      {/*<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between flex-col md:flex-row gap-4 md:gap-0">
         <div className="relative shrink-0">
           <button
             type="button"
             onClick={() => setBrowseOpen((o) => !o)}
-            className="flex items-center gap-2 bg-brand-yellow text-brand-dark px-6 py-3 rounded-full font-bold text-sm hover:bg-yellow-400 transition-colors shadow-sm bg-[var(--light-dark)]"
+            className="flex items-center gap-2 bg-brand-dark text-white px-6 py-3 rounded-full font-bold text-sm hover:opacity-90 transition-opacity shadow-sm"
           >
             <Menu size={20} strokeWidth={2.5} />
             BROWSE CATEGORIES
@@ -130,25 +121,7 @@ export default function Header({ store, categories = [] }: { store?: Store | nul
             </>
           )}
         </div>
-
-        {/* Nav */}
-        <nav className="hidden lg:flex items-center gap-8">
-          <Link href="/" className="text-sm font-bold text-brand-dark hover:text-brand-red transition-colors">Home</Link>
-          <Link href="/shop" className="text-sm font-bold text-brand-dark hover:text-brand-red transition-colors">Shop</Link>
-        </nav>
-
-        {/* Icons */}
-        <div className="flex items-center gap-5 shrink-0">
-          <Link href="/login" className="text-brand-dark hover:text-brand-red transition-colors"><User size={24} strokeWidth={2} /></Link>
-          <button className="text-brand-dark hover:text-brand-red transition-colors"><Heart size={24} strokeWidth={2} /></button>
-          <Link href="/cart" className="relative text-brand-dark hover:text-brand-red transition-colors">
-            <ShoppingBag size={24} strokeWidth={2} />
-            <span className="absolute -top-2 -right-2 bg-brand-red text-white text-[10px] font-bold w-[18px] h-[18px] rounded-full flex items-center justify-center">
-              {count}
-            </span>
-          </Link>
-        </div>
-      </div>
+      </div>*/}
     </header>
   );
 }

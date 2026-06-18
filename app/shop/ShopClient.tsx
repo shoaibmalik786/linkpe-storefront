@@ -155,7 +155,7 @@ export default function ShopClient({
                   key={label}
                   onClick={() => { setSelectedVariants((prev) => ({ ...prev, [facet.name]: toggle(prev[facet.name] ?? [], label) })); setCurrentPage(1); }}
                   className={`min-w-9 h-9 px-3 rounded-full text-xs font-bold border transition-colors flex items-center justify-center ${
-                    selected ? 'bg-black text-white border-black' : 'bg-white text-gray-700 border-gray-300 hover:border-brand-dark'
+                    selected ? 'bg-brand-dark text-white border-brand-dark' : 'bg-white text-gray-700 border-gray-300 hover:border-brand-dark'
                   }`}
                 >
                   {label}
@@ -186,7 +186,7 @@ export default function ShopClient({
         </div>
       )}
 
-      <button onClick={resetFilters} className="bg-black text-white px-6 py-2 rounded-lg text-sm font-bold shadow-md hover:bg-gray-800 transition-colors w-full lg:w-auto">
+      <button onClick={resetFilters} className="bg-brand-dark text-white px-6 py-2 rounded-lg text-sm font-bold shadow-md hover:opacity-90 transition-colors w-full lg:w-auto">
         RESET ALL
       </button>
     </div>
@@ -213,7 +213,7 @@ export default function ShopClient({
             <p className="text-sm font-medium text-gray-500">
               {totalItems > 0 ? `Showing ${(page - 1) * itemsPerPage + 1}–${Math.min(page * itemsPerPage, totalItems)} of ${totalItems}` : 'No products'}
             </p>
-            <button onClick={() => setIsMobileFilterOpen(true)} className="lg:hidden flex items-center gap-2 bg-brand-dark text-white px-4 py-2 rounded-full text-xs font-bold shadow-md hover:bg-gray-800 transition-colors ml-4">
+            <button onClick={() => setIsMobileFilterOpen(true)} className="lg:hidden flex items-center gap-2 bg-brand-dark text-white px-4 py-2 rounded-full text-xs font-bold shadow-md hover:opacity-90 transition-colors ml-4">
               <SlidersHorizontal size={14} /> FILTERS
             </button>
           </div>
@@ -263,7 +263,7 @@ export default function ShopClient({
                 key={idx + 1}
                 onClick={() => setCurrentPage(idx + 1)}
                 className={`w-8 h-8 lg:w-10 lg:h-10 rounded-full flex items-center justify-center text-xs lg:text-sm font-bold transition-colors ${
-                  page === idx + 1 ? 'bg-black text-white' : 'bg-transparent border border-gray-300 text-brand-dark hover:border-black'
+                  page === idx + 1 ? 'bg-brand-dark text-white' : 'bg-transparent border border-gray-300 text-brand-dark hover:border-brand-dark'
                 }`}
               >
                 {idx + 1}

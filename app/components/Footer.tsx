@@ -28,7 +28,7 @@ export default function Footer({ store, categories = [] }: { store?: Store | nul
   };
 
   return (
-    <footer className="w-full bg-brand-bg pt-16 lg:pt-24 pb-8 border-t border-black relative z-30">
+    <footer className="w-full bg-brand-dark text-white pt-16 lg:pt-24 pb-8 border-t border-white/10 relative z-30">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 lg:gap-8 mb-16">
           {/* Brand + contact + newsletter */}
@@ -36,39 +36,29 @@ export default function Footer({ store, categories = [] }: { store?: Store | nul
             <Link href="/" className="flex items-center gap-2 mb-6">
               {logoUrl ? (
                 // eslint-disable-next-line @next/next/no-img-element
-                <img src={logoUrl} alt={storeName} className="h-10 w-auto max-w-[180px] object-contain" />
+                <img src={logoUrl} alt={storeName} className="h-12 w-auto max-w-[200px] object-contain bg-white rounded-lg p-1.5" />
               ) : (
-                <span className="text-2xl font-extrabold tracking-tight text-brand-dark">{storeName}</span>
+                <span className="text-2xl font-extrabold tracking-tight text-white">{storeName}</span>
               )}
             </Link>
 
-            {bio && <p className="text-sm font-medium text-brand-dark/80 mb-6 max-w-sm leading-relaxed">{bio}</p>}
+            {bio && <p className="text-sm font-medium text-white/80 mb-6 max-w-sm leading-relaxed">{bio}</p>}
 
-            <div className="text-sm font-medium text-brand-dark space-y-2 mb-8">
+            <div className="text-sm font-medium text-white space-y-2 mb-8">
               {contact?.address && <p>Address: {contact.address}</p>}
-              {contact?.email && <p>E-mail: <a href={`mailto:${contact.email}`} className="hover:text-brand-red">{contact.email}</a></p>}
-              {contact?.phone && <p>Phone: <a href={`tel:${contact.phone}`} className="hover:text-brand-red">{contact.phone}</a></p>}
-            </div>
-
-            <div className="w-full max-w-sm">
-              <h4 className="text-brand-dark font-extrabold mb-4">Subscribe To Our Newsletter</h4>
-              <form onSubmit={(e) => e.preventDefault()} className="flex items-center bg-[#f7f7f7] rounded-full p-1 border border-gray-200 focus-within:border-brand-dark transition-colors">
-                <input type="email" placeholder="Your Email Address" className="flex-1 bg-transparent outline-none px-4 text-sm text-brand-dark placeholder-gray-500" />
-                <button type="submit" className="w-10 h-10 bg-brand-yellow rounded-full flex items-center justify-center text-brand-dark hover:bg-yellow-400 transition-colors shrink-0">
-                  <ArrowRight size={18} strokeWidth={2.5} />
-                </button>
-              </form>
+              {contact?.email && <p>E-mail: <a href={`mailto:${contact.email}`} className="hover:text-brand-accent">{contact.email}</a></p>}
+              {contact?.phone && <p>Phone: <a href={`tel:${contact.phone}`} className="hover:text-brand-accent">{contact.phone}</a></p>}
             </div>
           </motion.div>
 
           {/* Shop by category */}
           {categories.length > 0 && (
             <motion.div className="lg:col-span-3" {...fade}>
-              <h4 className="text-lg font-extrabold text-brand-dark mb-6">Shop by Category</h4>
+              <h4 className="text-lg font-extrabold text-white mb-6">Shop by Category</h4>
               <ul className="flex flex-col gap-3">
                 {categories.slice(0, 6).map((cat) => (
                   <li key={cat.id}>
-                    <Link href={`/shop?category=${encodeURIComponent(cat.slug)}`} className="text-sm font-medium text-gray-600 hover:text-brand-red transition-colors">
+                    <Link href={`/shop?category=${encodeURIComponent(cat.slug)}`} className="text-sm font-medium text-white/70 hover:text-brand-accent transition-colors">
                       {cat.name}
                     </Link>
                   </li>
@@ -79,22 +69,22 @@ export default function Footer({ store, categories = [] }: { store?: Store | nul
 
           {/* Quick links */}
           <motion.div className="lg:col-span-2" {...fade}>
-            <h4 className="text-lg font-extrabold text-brand-dark mb-6">Quick Links</h4>
+            <h4 className="text-lg font-extrabold text-white mb-6">Quick Links</h4>
             <ul className="flex flex-col gap-3">
-              <li><Link href="/" className="text-sm font-medium text-gray-600 hover:text-brand-red transition-colors">Home</Link></li>
-              <li><Link href="/shop" className="text-sm font-medium text-gray-600 hover:text-brand-red transition-colors">Shop</Link></li>
-              <li><Link href="/cart" className="text-sm font-medium text-gray-600 hover:text-brand-red transition-colors">Cart</Link></li>
-              <li><Link href="/account/orders" className="text-sm font-medium text-gray-600 hover:text-brand-red transition-colors">My Orders</Link></li>
+              <li><Link href="/" className="text-sm font-medium text-white/70 hover:text-brand-accent transition-colors">Home</Link></li>
+              <li><Link href="/shop" className="text-sm font-medium text-white/70 hover:text-brand-accent transition-colors">Shop</Link></li>
+              <li><Link href="/cart" className="text-sm font-medium text-white/70 hover:text-brand-accent transition-colors">Cart</Link></li>
+              <li><Link href="/account/orders" className="text-sm font-medium text-white/70 hover:text-brand-accent transition-colors">My Orders</Link></li>
             </ul>
           </motion.div>
 
           {/* Follow us */}
           {socialLinks.length > 0 && (
             <motion.div className="lg:col-span-2" {...fade}>
-              <h4 className="text-lg font-extrabold text-brand-dark mb-6">Follow Us</h4>
+              <h4 className="text-lg font-extrabold text-white mb-6">Follow Us</h4>
               <div className="flex flex-col gap-3">
                 {socialLinks.map(({ label, href }) => (
-                  <a key={label} href={href} target="_blank" rel="noopener noreferrer" className="text-sm font-medium text-gray-600 hover:text-brand-red transition-colors">
+                  <a key={label} href={href} target="_blank" rel="noopener noreferrer" className="text-sm font-medium text-white/70 hover:text-brand-accent transition-colors">
                     {label}
                   </a>
                 ))}
@@ -104,18 +94,10 @@ export default function Footer({ store, categories = [] }: { store?: Store | nul
         </div>
 
         {/* Bottom bar */}
-        <div className="w-full flex flex-col md:flex-row items-center justify-between pt-8 border-t border-gray-200 gap-4">
-          <p className="text-sm font-medium text-brand-dark">
-            © {new Date().getFullYear()} <span className="font-extrabold text-brand-red">{storeName}</span>. All Rights Reserved.
+        <div className="w-full flex flex-col md:flex-row items-center justify-center pt-8 border-t border-white/10 gap-4">
+          <p className="text-sm font-medium text-white">
+            © {new Date().getFullYear()} <span className="font-extrabold text-brand-accent">{storeName}</span>. All Rights Reserved.
           </p>
-          <div className="flex items-center gap-2">
-            <span className="text-sm font-extrabold text-brand-dark mr-2">We Accept:</span>
-            {['bg-blue-800', 'bg-red-500', 'bg-orange-500', 'bg-blue-400', 'bg-blue-600'].map((color, i) => (
-              <div key={i} className="w-10 h-6 bg-white border border-gray-200 rounded flex items-center justify-center overflow-hidden">
-                <div className={`w-full h-2 ${color}`} />
-              </div>
-            ))}
-          </div>
         </div>
       </div>
     </footer>

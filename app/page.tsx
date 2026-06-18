@@ -5,8 +5,6 @@ import Trending from './components/Trending';
 import VideoBanner from './components/VideoBanner';
 import PopularProducts from './components/PopularProducts';
 import TrustedPartners from './components/TrustedPartners';
-import LatestPosts from './components/LatestPosts';
-import InstagramFeed from './components/InstagramFeed';
 import SiteFooter from './components/SiteFooter';
 import { getCategories, getStore, isLinkpeConfigured, listProducts } from '@/lib/linkpe';
 
@@ -34,8 +32,6 @@ export default async function Home() {
       <VideoBanner />
       <PopularProducts products={products} categories={categories} />
       <TrustedPartners />
-      <LatestPosts />
-      <InstagramFeed />
       <SiteFooter />
     </main>
   );

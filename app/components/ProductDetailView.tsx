@@ -124,7 +124,7 @@ export default function ProductDetailView({ product, reviews, variant = 'page' }
   return (
     <div className={`relative w-full bg-white ${variant === 'modal' ? 'rounded-xl overflow-hidden flex flex-col md:flex-row max-h-[90vh]' : 'flex flex-col md:flex-row gap-8'}`}>
       {/* LEFT: gallery */}
-      <div className={`w-full md:w-1/2 bg-[#7eb6d9] p-4 flex flex-col-reverse md:flex-row gap-4 ${variant === 'modal' ? 'h-[400px] md:h-auto' : 'rounded-xl md:h-[560px]'} overflow-hidden`}>
+      <div className={`w-full md:w-1/2 bg-brand-secondary p-4 flex flex-col-reverse md:flex-row gap-4 ${variant === 'modal' ? 'h-[400px] md:h-auto' : 'rounded-xl md:h-[560px]'} overflow-hidden`}>
         <div className="w-full md:w-24 h-24 md:h-full shrink-0">
           <Swiper
             onSwiper={setThumbsSwiper}
@@ -175,7 +175,7 @@ export default function ProductDetailView({ product, reviews, variant = 'page' }
       {/* RIGHT: details */}
       <div className={`w-full md:w-1/2 flex flex-col overflow-y-auto ${variant === 'modal' ? 'p-3 md:p-6 lg:p-10' : 'py-2'}`}>
         {discountPct > 0 && (
-          <span className="bg-black text-white text-[10px] font-bold px-3 py-1.5 rounded-sm w-max mb-4 tracking-wider uppercase">
+          <span className="bg-brand-accent text-white text-[10px] font-bold px-3 py-1.5 rounded-sm w-max mb-4 tracking-wider uppercase">
             SALE {discountPct}% OFF
           </span>
         )}
@@ -217,7 +217,7 @@ export default function ProductDetailView({ product, reviews, variant = 'page' }
                     disabled={!selectable}
                     onClick={() => setSelectedOptions((prev) => ({ ...prev, [g.id]: o.id }))}
                     className={`px-4 py-2 rounded-lg border text-sm font-semibold transition-colors ${
-                      isSelected ? 'border-black bg-black text-white' : 'border-gray-300 text-brand-dark hover:border-black'
+                      isSelected ? 'border-brand-dark bg-brand-dark text-white' : 'border-gray-300 text-brand-dark hover:border-brand-dark'
                     } ${!selectable ? 'opacity-40 cursor-not-allowed line-through' : ''}`}
                   >
                     {o.label}
@@ -269,11 +269,11 @@ export default function ProductDetailView({ product, reviews, variant = 'page' }
           <div>
             <span className="block text-sm font-extrabold text-brand-dark mb-2">Quantity</span>
             <div className="flex items-center gap-4">
-              <button onClick={() => setQuantity((q) => Math.max(1, q - 1))} className="w-10 h-10 bg-black text-white rounded-full flex items-center justify-center hover:bg-gray-800 transition-colors">
+              <button onClick={() => setQuantity((q) => Math.max(1, q - 1))} className="w-10 h-10 bg-brand-dark text-white rounded-full flex items-center justify-center hover:opacity-90 transition-opacity">
                 <Minus size={16} />
               </button>
               <span className="text-xl font-bold w-6 text-center">{quantity}</span>
-              <button onClick={() => setQuantity((q) => q + 1)} className="w-10 h-10 bg-black text-white rounded-full flex items-center justify-center hover:bg-gray-800 transition-colors">
+              <button onClick={() => setQuantity((q) => q + 1)} className="w-10 h-10 bg-brand-dark text-white rounded-full flex items-center justify-center hover:opacity-90 transition-opacity">
                 <Plus size={16} />
               </button>
             </div>
@@ -284,11 +284,11 @@ export default function ProductDetailView({ product, reviews, variant = 'page' }
         <div className="flex items-center gap-4 mb-8">
           <button
             onClick={handleAddToCart}
-            className="flex-1 flex justify-center items-center gap-2 bg-black text-white py-4 rounded-lg font-bold text-sm hover:bg-gray-800 transition-colors shadow-lg shadow-black/20"
+            className="flex-1 flex justify-center items-center gap-2 bg-brand-dark text-white py-4 rounded-lg font-bold text-sm hover:opacity-90 transition-opacity shadow-lg shadow-black/20"
           >
             {added ? (<><Check size={18} /> ADDED TO CART</>) : 'ADD TO CART'}
           </button>
-          <button className="px-6 py-4 rounded-lg border border-gray-300 font-bold text-sm flex items-center gap-2 hover:border-black transition-colors shrink-0">
+          <button className="px-6 py-4 rounded-lg border border-gray-300 font-bold text-sm flex items-center gap-2 hover:border-brand-dark transition-colors shrink-0">
             <Heart size={18} />
             <span className="hidden sm:block">Add To Wishlist</span>
           </button>

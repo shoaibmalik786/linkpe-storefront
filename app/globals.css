@@ -1,19 +1,27 @@
 @import "tailwindcss";
 
 :root {
+  /* ── Store theme — overridden at runtime in app/layout.tsx from the API.
+     primary  = main brand (text, headings, dark buttons/surfaces)
+     secondary = light surfaces (header band, page/section background)
+     accent   = highlights (CTAs, sale badges, hovers) ── */
+  --store-primary: #111111;
+  --store-secondary: #f1efe9;
+  --store-accent: #CC0D39;
+
   --background: #ffffff;
   --foreground: #171717;
-  --primary: #CC0D39;
-  --primary-hover: #ad0b30;
-  --primary-dark: #ad0b30;
-  --secondary: #000;
-  --secondary-hover: #000;
+  --primary: var(--store-accent);
+  --primary-hover: var(--store-accent);
+  --primary-dark: var(--store-accent);
+  --secondary: var(--store-primary);
+  --secondary-hover: var(--store-primary);
   --secondary-light: #A7BFFE;
-  --title: #000;
-  --bg-light: #FFFAF3;
-  --light-dark: #FEEB9D;
-  --theme-text-color: #000000;
-  --dark: #151F37;
+  --title: var(--store-primary);
+  --bg-light: var(--store-secondary);
+  --light-dark: var(--store-secondary);
+  --theme-text-color: var(--store-primary);
+  --dark: var(--store-primary);
   --dark-light: #F9F9F9;
   --rgba-primary-1: rgba(204, 13, 57, .1);
   --rgba-primary-2: rgba(204, 13, 57, .2);
@@ -50,8 +58,17 @@
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
   --font-inter: var(--font-inter-sans);
-  /* Used by product UI (text-brand-dark / bg-brand-dark). */
-  --color-brand-dark: #111111;
+
+  /* Brand utilities driven by the store's theme (primary / secondary / accent).
+     `inline` keeps them as var() at point of use, so the runtime override in
+     app/layout.tsx re-themes the whole UI. */
+  --color-brand-primary: var(--store-primary);
+  --color-brand-secondary: var(--store-secondary);
+  --color-brand-accent: var(--store-accent);
+  --color-brand-dark: var(--store-primary);   /* text, headings, dark buttons */
+  --color-brand-bg: var(--store-secondary);    /* page / section background */
+  --color-brand-red: var(--store-accent);      /* sale + hover accents */
+  --color-brand-yellow: var(--store-accent);   /* accent surfaces */
 }
 
 @media (prefers-color-scheme: dark) {
@@ -62,7 +79,7 @@
 }
 
 body {
-  background-color: rgba(var(--bs-light-rgb), 1);
+  background-color: var(--store-secondary);
   color: var(--foreground);
   /*  font-family: Arial, Helvetica, sans-serif;*/
   font-family: var(--font-inter), sans-serif;

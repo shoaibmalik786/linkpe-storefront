@@ -22,8 +22,8 @@ export default function Categories({
   };
 
   return (
-    <section className="relative w-full bg-[#fef08a] py-20 lg:py-32 rounded-t-[3rem] -mt-10 z-20">
-      <div className="circular_badge absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-32 h-32 bg-[#fef08a] rounded-full flex items-center justify-center shadow-sm">
+    <section className="relative w-full bg-brand-accent py-20 lg:py-32 rounded-t-[3rem] -mt-10 z-20">
+      <div className="circular_badge absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-32 h-32 bg-brand-accent rounded-full flex items-center justify-center shadow-sm">
         <motion.div
           animate={{ rotate: 360 }}
           transition={{ repeat: Infinity, duration: 12, ease: 'linear' }}

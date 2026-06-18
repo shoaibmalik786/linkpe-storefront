@@ -13,6 +13,8 @@ export default function Hero({ store }: { store?: Store | null }) {
   const subheading = hero?.hide_subheading ? null : hero?.subheading;
   const ctaLabel = hero?.cta_label || 'Shop Now';
   const ctaUrl = hero?.cta_url || '/shop';
+  const bannerUrl = store?.store_banner_url ?? null;
+  const storeName = store?.business_name ?? 'Store';
   // Animation variants for staggering children
   const containerVariants: Variants = {
     hidden: { opacity: 0 },
@@ -62,21 +64,30 @@ export default function Hero({ store }: { store?: Store | null }) {
         <motion.div variants={itemVariants} className="flex flex-wrap gap-4">
           <Link
             href={ctaUrl}
-            className="px-8 py-3.5 bg-brand-dark text-white text-sm font-bold rounded-full bg-black hover:bg-gray-800 transition-colors"
+            className="px-8 py-3.5 bg-transparent border-2 border-brand-dark text-brand-dark text-sm font-bold rounded-full hover:bg-brand-dark hover:text-white transition-colors"
           >
             {ctaLabel}
-          </Link>
-          <Link
-            href="/shop"
-            className="px-8 py-3.5 bg-transparent border-2 border-brand-dark text-brand-dark text-sm font-bold rounded-full hover:bg-black hover:text-white transition-colors"
-          >
-            VIEW PRODUCTS
           </Link>
         </motion.div>
       </motion.div>
 
-      {/* Right Image & Floating Elements Composition */}
+      {/* Right: store banner if set, else the template's decorative composition */}
       <div className="w-full lg:w-1/2 max-w-[41.66666667%] relative mt-16 lg:mt-0 flex justify-center items-center">
+        {bannerUrl ? (
+          <motion.div
+            initial={{ opacity: 0, scale: 0.96 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.6, ease: 'easeOut' }}
+            className="w-full"
+          >
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={bannerUrl}
+              alt={storeName}
+              className="w-full h-[360px] lg:h-[560px] object-cover rounded-[2.5rem] shadow-xl"
+            />
+          </motion.div>
+        ) : (
         <div className="banner-media">
           <div className="shap" />
           <div className="border-shap" />
@@ -179,6 +190,7 @@ export default function Hero({ store }: { store?: Store | null }) {
             </motion.li>
           </ul>
         </div>
+        )}
       </div>
     </section>
   );
