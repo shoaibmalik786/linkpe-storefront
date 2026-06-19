@@ -31,6 +31,8 @@ export function readCart(): CartLine[] {
   try {
     const raw = window.localStorage.getItem(KEY);
     const parsed = raw ? JSON.parse(raw) : [];
+
+    console.log("prased data", parsed);
     return Array.isArray(parsed) ? (parsed as CartLine[]) : [];
   } catch {
     return [];
@@ -68,6 +70,34 @@ export function addToCart(line: CartLine): void {
 
 export function cartCount(): number {
   return readCart().reduce((n, l) => n + l.quantity, 0);
+}
+
+export function updateCartQuantity(
+  productId: string,
+  quantity: number
+): void {
+  const cart = readCart();
+
+  const updated = cart.map((item) =>
+    item.product_id === productId
+      ? {
+          ...item,
+          quantity: Math.max(1, quantity),
+        }
+      : item
+  );
+
+  writeCart(updated);
+}
+
+export function removeCartItem(productId: string): void {
+  const cart = readCart();
+
+  const updated = cart.filter(
+    (item) => item.product_id !== productId
+  );
+
+  writeCart(updated);
 }
 
 export const CART_CHANGED_EVENT = EVENT;

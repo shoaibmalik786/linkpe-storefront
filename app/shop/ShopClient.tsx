@@ -224,12 +224,12 @@ export default function ShopClient({
               <option value="price_asc">Price: Low to High</option>
               <option value="price_desc">Price: High to Low</option>
             </select>
-            <select value={itemsPerPage} onChange={(e) => { setItemsPerPage(Number(e.target.value)); setCurrentPage(1); }} className="bg-transparent text-sm font-medium border-b border-gray-300 outline-none pb-1 cursor-pointer">
+            {/*<select value={itemsPerPage} onChange={(e) => { setItemsPerPage(Number(e.target.value)); setCurrentPage(1); }} className="bg-transparent text-sm font-medium border-b border-gray-300 outline-none pb-1 cursor-pointer">
               <option value={9}>9 Products</option>
               <option value={12}>12 Products</option>
               <option value={24}>24 Products</option>
               <option value={48}>48 Products</option>
-            </select>
+            </select>*/}
             <div className="flex items-center gap-2 text-gray-400">
               {/*<button onClick={() => setViewMode('list')} className={viewMode === 'list' ? 'text-brand-dark' : 'hover:text-brand-dark transition-colors'}><List size={20} /></button>*/}
               <button onClick={() => setViewMode('grid')} className={viewMode === 'grid' ? 'text-brand-dark' : 'hover:text-brand-dark transition-colors'}><LayoutGrid size={20} /></button>

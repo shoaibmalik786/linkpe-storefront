@@ -24,7 +24,6 @@ export default async function ShopPage({
 
   const bannerUrl = store?.store_banner_url ?? null;
   const storeName = store?.business_name ?? 'Store';
-  console.log("bannerUrl", storeName)
   return (
     <main className="min-h-screen bg-brand-bg text-brand-dark pb-20">
       <SiteHeader />
@@ -35,7 +34,7 @@ export default async function ShopPage({
       >
         <div className="absolute inset-0 bg-black/30" />
         <div className="relative z-10 text-center text-white px-4">
-          <h1 className="text-3xl md:text-5xl font-extrabold mb-4">Shop</h1>
+          <h1 className="text-3xl md:text-5xl font-extrabold mb-4">{storeName}</h1>
           {/*<div className="flex items-center justify-center gap-2 text-sm font-medium">
             <Link href="/" className="hover:text-white transition-colors">Home</Link>
             <span>&gt;</span>
