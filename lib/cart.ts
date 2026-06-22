@@ -47,7 +47,7 @@ function writeCart(lines: CartLine[]): void {
 
 // Two lines are the "same" line only when product + variant selection match, so
 // re-adding the same configuration bumps quantity instead of duplicating.
-function sameLine(a: CartLine, b: CartLine): boolean {
+export function sameLine(a: CartLine, b: CartLine): boolean {
   if (a.product_id !== b.product_id) return false;
   const av = JSON.stringify((a.selected_variants ?? []).map((v) => v.option_id).sort());
   const bv = JSON.stringify((b.selected_variants ?? []).map((v) => v.option_id).sort());

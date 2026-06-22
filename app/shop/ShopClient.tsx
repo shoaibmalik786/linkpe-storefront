@@ -115,7 +115,7 @@ export default function ShopClient({
         <button className="lg:hidden text-gray-500 hover:text-black" onClick={() => setIsMobileFilterOpen(false)}><X size={24} /></button>
       </div>
 
-      <div className="flex items-center border border-gray-300 rounded-full px-4 py-2 bg-white focus-within:border-brand-dark transition-colors">
+      {/*<div className="flex items-center border border-gray-300 rounded-full px-4 py-2 bg-white focus-within:border-brand-dark transition-colors">
         <input
           type="text"
           placeholder="Search Product"
@@ -124,7 +124,7 @@ export default function ShopClient({
           className="flex-1 outline-none text-sm bg-transparent"
         />
         <Search size={16} className="text-gray-400" />
-      </div>
+      </div>*/}
 
       {priceMax > priceMin && (
         <div>

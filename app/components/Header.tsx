@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { Search, ChevronDown, Heart, ShoppingBag } from 'lucide-react';
 import Link from 'next/link';
 import type { Store, Category } from '@linkpe-storefront/sdk';
@@ -9,10 +9,29 @@ import { cartCount, CART_CHANGED_EVENT } from '@/lib/cart';
 
 export default function Header({ store, categories = [] }: { store?: Store | null; categories?: Category[] }) {
   const router = useRouter();
-  const [query, setQuery] = useState('');
+  const searchParams = useSearchParams();
+  const [query, setQuery] = useState(
+    searchParams.get('search') || ''
+  );
   const [catOpen, setCatOpen] = useState(false);
   const [selectedCat, setSelectedCat] = useState<Category | null>(null);
   const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    const categorySlug = searchParams.get('category');
+
+    if (!categorySlug) {
+      setSelectedCat(null);
+      return;
+    }
+
+    const matched = categories.find(c => c.slug === categorySlug);
+    setSelectedCat(matched || null);
+  }, [searchParams, categories]);
+
+  useEffect(() => {
+    setQuery(searchParams.get('search') || '');
+  }, [searchParams]);
 
   useEffect(() => {
     const update = () => setCount(cartCount());
