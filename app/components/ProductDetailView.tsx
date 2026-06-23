@@ -1,13 +1,13 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import { useMemo, useState, useEffect } from 'react';
 import { Search, Star, Minus, Plus, Heart, Check } from 'lucide-react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { FreeMode, Navigation, Thumbs } from 'swiper/modules';
 import type { Swiper as SwiperClass } from 'swiper';
 import { motion, AnimatePresence } from 'framer-motion';
 import type { ProductDetail, VariantGroup, ProductAddon } from '@linkpe-storefront/sdk';
-import { addToCart } from '@/lib/cart';
+import { addToCart, readCart, sameLine } from '@/lib/cart';
 
 import 'swiper/css';
 import 'swiper/css/free-mode';
@@ -63,7 +63,12 @@ export default function ProductDetailView({ product, reviews, variant = 'page' }
   const [thumbsSwiper, setThumbsSwiper] = useState<SwiperClass | null>(null);
   const [activeImageIndex, setActiveImageIndex] = useState(0);
   const [isLightboxOpen, setIsLightboxOpen] = useState(false);
-  const [added, setAdded] = useState(false);
+  const [mounted, setMounted] = useState(false);
+  const [isAddedToCart, setIsAddedToCart] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   // Resolve selected variant objects + their price adjustments.
   const selectedVariants = useMemo(() => {
@@ -94,6 +99,50 @@ export default function ProductDetailView({ product, reviews, variant = 'page' }
   const rating = reviews?.average_rating ?? 0;
   const reviewCount = reviews?.count ?? 0;
 
+  useEffect(() => {
+    if (!mounted) return;
+
+    checkIfAdded();
+  }, [
+    mounted,
+    product.id,
+    quantity,
+    selectedVariants,
+    addonQty,
+  ]);
+
+  function checkIfAdded() {
+    if (!mounted) return;
+
+    const cart = readCart();
+
+    const currentLine = {
+      product_id: product.id,
+      quantity,
+      selected_variants: selectedVariants.length
+        ? selectedVariants
+        : undefined,
+      addons: addons
+        .filter((a) => (addonQty[a.id] ?? 0) > 0)
+        .map((a) => ({
+          addon_id: a.id,
+          quantity: addonQty[a.id],
+        })),
+      name: product.name,
+      slug: product.slug,
+      unit_price: unitPrice,
+      image_url: galleryImages[0] ?? null,
+      variant_summary:
+        selectedVariants.map((v) => v.option_label).join(' • ') || null,
+    };
+
+    const exists = cart.some((item) =>
+      sameLine(item, currentLine)
+    );
+
+    setIsAddedToCart(exists);
+  }
+
   function setAddon(addon: ProductAddon, qty: number) {
     const max = addon.max_quantity ?? Infinity;
     const clamped = Math.max(0, Math.min(qty, max));
@@ -101,21 +150,29 @@ export default function ProductDetailView({ product, reviews, variant = 'page' }
   }
 
   function handleAddToCart() {
+    if (isAddedToCart) return;
+
     addToCart({
       product_id: product.id,
       quantity,
-      selected_variants: selectedVariants.length ? selectedVariants : undefined,
+      selected_variants: selectedVariants.length
+        ? selectedVariants
+        : undefined,
       addons: addons
         .filter((a) => (addonQty[a.id] ?? 0) > 0)
-        .map((a) => ({ addon_id: a.id, quantity: addonQty[a.id] })),
+        .map((a) => ({
+          addon_id: a.id,
+          quantity: addonQty[a.id],
+        })),
       name: product.name,
       slug: product.slug,
       unit_price: unitPrice,
       image_url: galleryImages[0] ?? null,
-      variant_summary: selectedVariants.map((v) => v.option_label).join(' • ') || null,
+      variant_summary:
+        selectedVariants.map((v) => v.option_label).join(' • ') || null,
     });
-    setAdded(true);
-    setTimeout(() => setAdded(false), 2000);
+
+    setIsAddedToCart(true);
   }
 
   const fmt = (n: number) =>
@@ -286,7 +343,7 @@ export default function ProductDetailView({ product, reviews, variant = 'page' }
             onClick={handleAddToCart}
             className="flex-1 flex justify-center items-center gap-2 bg-brand-dark text-white py-4 rounded-lg font-bold text-sm hover:opacity-90 transition-opacity shadow-lg shadow-black/20"
           >
-            {added ? (<><Check size={18} /> ADDED TO CART</>) : 'ADD TO CART'}
+            {isAddedToCart ? (<><Check size={18} /> ADDED TO CART</>) : 'ADD TO CART'}
           </button>
           <button className="px-6 py-4 rounded-lg border border-gray-300 font-bold text-sm flex items-center gap-2 hover:border-brand-dark transition-colors shrink-0">
             <Heart size={18} />
