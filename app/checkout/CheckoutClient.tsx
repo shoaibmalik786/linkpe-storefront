@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronDown } from 'lucide-react';
+import { ChevronDown, Sparkles, Package2, MapPin } from 'lucide-react';
 import Link from 'next/link';
 
 import {
@@ -19,47 +19,17 @@ type CartItem = {
 };
 
 type BillingData = {
-  firstName: string;
-  lastName: string;
-  company: string;
-  country: string;
-  address1: string;
-  address2: string;
+  customerName: string;
+  customerPhone: string;
+  customerAddress: string;
+  streetAddress: string;
   city: string;
-  state: string;
-  zip: string;
-  phone: string;
-  email: string;
-  notes: string;
+  deliveryPincode: string;
 };
 
 export default function CheckoutClient() {
-  // -----------------------------
-  // CART STATE
-  // -----------------------------
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
-
-  // -----------------------------
-  // CHECKOUT STATE
-  // -----------------------------
-  const [shippingMethod, setShippingMethod] =
-    useState<'free' | 'flat'>('flat');
-
-  const [paymentMethod, setPaymentMethod] =
-    useState<'bank' | 'cod' | 'paypal'>(
-      'cod'
-    );
-
   const [termsAccepted, setTermsAccepted] =
-    useState(false);
-
-  // -----------------------------
-  // TOGGLES
-  // -----------------------------
-  const [showLogin, setShowLogin] =
-    useState(false);
-
-  const [showCoupon, setShowCoupon] =
     useState(false);
 
   // -----------------------------
@@ -67,18 +37,12 @@ export default function CheckoutClient() {
   // -----------------------------
   const [billingData, setBillingData] =
     useState<BillingData>({
-      firstName: '',
-      lastName: '',
-      company: '',
-      country: 'India',
-      address1: '',
-      address2: '',
+      customerName: '',
+      customerPhone: '',
+      customerAddress: '',
+      streetAddress: '',
       city: '',
-      state: '',
-      zip: '',
-      phone: '',
-      email: '',
-      notes: '',
+      deliveryPincode: '',
     });
 
   // -----------------------------
@@ -130,13 +94,7 @@ export default function CheckoutClient() {
     );
   }, [cartItems]);
 
-  const shippingCost =
-    shippingMethod === 'flat'
-      ? 25.75
-      : 0;
-
-  const finalTotal =
-    subtotal + shippingCost;
+  const finalTotal = subtotal;
 
   // -----------------------------
   // HANDLE INPUT CHANGE
@@ -161,7 +119,6 @@ export default function CheckoutClient() {
 
     console.log('Cart:', cartItems);
 
-    console.log('Payment:', paymentMethod);
 
     // NEXT STEP:
     // integrate checkout API here
@@ -175,301 +132,178 @@ export default function CheckoutClient() {
         <h2 className="text-xl font-extrabold text-gray-900 mb-6">
           Billing details
         </h2>
-
-        {/* TOGGLES */}
-        <div className="space-y-4 mb-8">
-
-          <button
-            onClick={() =>
-              setShowLogin(!showLogin)
-            }
-            className="w-full border border-gray-300 rounded-md px-4 py-3 flex items-center justify-between bg-white text-sm font-bold text-gray-600"
-          >
-            Returning customer? Click here to login
-
-            <ChevronDown
-              size={18}
-              className={`transition-transform ${
-                showLogin
-                  ? 'rotate-180'
-                  : ''
-              }`}
-            />
-          </button>
-
-          <AnimatePresence>
-            {showLogin && (
-              <motion.div
-                initial={{
-                  opacity: 0,
-                  height: 0,
-                }}
-                animate={{
-                  opacity: 1,
-                  height: 'auto',
-                }}
-                exit={{
-                  opacity: 0,
-                  height: 0,
-                }}
-                className="overflow-hidden"
-              >
-                <div className="border border-gray-200 rounded-md p-4 bg-white">
-                  Login form coming soon.
-                </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
-
-          <button
-            onClick={() =>
-              setShowCoupon(!showCoupon)
-            }
-            className="w-full border border-gray-300 rounded-md px-4 py-3 flex items-center justify-between bg-white text-sm font-bold text-gray-600"
-          >
-            Have a coupon? Click here to enter your code
-
-            <ChevronDown
-              size={18}
-              className={`transition-transform ${
-                showCoupon
-                  ? 'rotate-180'
-                  : ''
-              }`}
-            />
-          </button>
-        </div>
-
         {/* FORM */}
-        <div className="space-y-6">
+        <div className="border border-gray-200 rounded-xl p-3 md:p-6 bg-white space-y-6">
+          <div className="mb-8 flex flex-wrap items-start justify-between gap-4">
+            <div>
+              <div className="inline-flex items-center gap-2 rounded-full border border-[rgba(var(--theme-primary-rgb),0.16)] bg-[#fefcfa] px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-[var(--theme-primary)] ">
+                <Sparkles className="h-3.5 w-3.5" />
+                Secure checkout
+              </div>
+              <p className="mt-3 max-w-2xl text-sm leading-7 text-gray-600">Complete your contact and delivery details once, then continue to secure payment.</p>
+            </div>
 
-          {/* FIRST + LAST */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="rounded-[12px] md:rounded-[24px] border border-black/8 bg-[#fefcfa] px-5 py-4 text-right">
+              <p className="text-xs font-semibold uppercase tracking-[0.18em] text-gray-500">Total payable</p>
+              { false /*appliedCoupon*/ && (
+                <p className="mt-1 text-sm text-gray-400 line-through">
+                  {/*{formatCurrency(localTotalPayable)}*/}
+                  ₹2,199
+                </p>
+              )}
+              <p className="mt-1 text-4xl font-semibold tracking-[-0.05em] text-gray-950">
+                {/*{appliedCoupon
+                  ? formatCurrency(appliedCoupon.type === 'free_shipping'
+                      ? localProductTotal
+                      : appliedCoupon.finalSubtotal + (shippingCost ?? 0))
+                  : formatCurrency(localTotalPayable)}*/}
+                ₹2,199
+              </p>
+              {true/*appliedCoupon*/ && (
+                <p className="mt-1 text-xs font-semibold text-emerald-600">
+                  {/*{appliedCoupon.message}*/}
+                </p>
+              )}
+            </div>
+          </div>
 
+          <div className="rounded-[12px] md:rounded-[28px] border border-black/8 bg-[rgba(248,250,252,0.78)] p-3 md:p-5">
+            <div className="mb-4 flex items-center gap-3">
+              <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#fefcfa] text-[var(--theme-primary)]">
+                <Package2 className="h-5 w-5" />
+              </div>
+              <div>
+                <p className="text-sm font-semibold text-gray-900">Contact details</p>
+                <p className="text-sm text-gray-500">Used for order updates and payment confirmation.</p>
+              </div>
+            </div>
+            {/* FullName */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <label className="block text-sm font-bold mb-2">
+                  Full Name *
+                </label>
+
+                <input
+                  type="text"
+                  value={billingData.customerName}
+                  onChange={(e) =>
+                    handleInputChange(
+                      'customerName',
+                      e.target.value
+                    )
+                  }
+                  className="w-full border border-gray-300 rounded-md px-4 py-3 bg-white outline-none"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-bold mb-2">
+                  Phone
+                </label>
+
+                <input
+                  type="tel"
+                  value={billingData.customerPhone}
+                  onChange={(e) =>
+                    handleInputChange(
+                      'customerPhone',
+                      e.target.value
+                    )
+                  }
+                  className="w-full border border-gray-300 rounded-md px-4 py-3 bg-white outline-none"
+                />
+              </div>
+            </div>
+          </div>
+
+          <div className="rounded-[12px] md:rounded-[28px] border border-black/8 bg-[rgba(248,250,252,0.78)] p-3 md:p-5">
+            <div className="mb-5 flex items-center gap-3">
+              <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#fefcfa] text-[var(--theme-primary)]">
+                <MapPin className="h-5 w-5" />
+              </div>
+              <div>
+                <p className="text-sm font-semibold text-gray-900">Delivery address</p>
+                <p className="text-sm text-gray-500">Split up for faster checkout and cleaner shipping details.</p>
+              </div>
+            </div>
+
+            {/* ADDRESS */}
             <div>
               <label className="block text-sm font-bold mb-2">
-                First Name *
+                Street Address
               </label>
 
               <input
                 type="text"
-                value={billingData.firstName}
+                placeholder="House / flat no., building, street, area"
+                value={billingData.customerAddress}
                 onChange={(e) =>
                   handleInputChange(
-                    'firstName',
+                    'customerAddress',
+                    e.target.value
+                  )
+                }
+                className="w-full border border-gray-300 rounded-md px-4 py-3 bg-white outline-none mb-4"
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-bold mb-2">
+                Apartment, area, or landmark
+              </label>
+              <input
+                type="text"
+                placeholder="Flat no., floor, landmark or delivery note"
+                value={billingData.streetAddress}
+                onChange={(e) =>
+                  handleInputChange(
+                    'streetAddress',
+                    e.target.value
+                  )
+                }
+                className="w-full border border-gray-300 rounded-md px-4 py-3 bg-white outline-none mb-4"
+              />
+            </div>
+
+            {/* CITY */}
+            <div>
+              <label className="block text-sm font-bold mb-2">
+                Town / City
+              </label>
+              <input
+                type="text"
+                placeholder="Enter your city"
+                value={billingData.city}
+                onChange={(e) =>
+                  handleInputChange(
+                    'city',
+                    e.target.value
+                  )
+                }
+                className="w-full border border-gray-300 rounded-md px-4 py-3 bg-white outline-none mb-4"
+              />
+            </div>
+
+            {/* ZIP */}
+            <div>
+              <label className="block text-sm font-bold mb-2">
+                PIN Code
+              </label>
+              <input
+                type="text"
+                value={billingData.deliveryPincode}
+                onChange={(e) =>
+                  handleInputChange(
+                    'deliveryPincode',
                     e.target.value
                   )
                 }
                 className="w-full border border-gray-300 rounded-md px-4 py-3 bg-white outline-none"
               />
             </div>
-
-            <div>
-              <label className="block text-sm font-bold mb-2">
-                Last Name *
-              </label>
-
-              <input
-                type="text"
-                value={billingData.lastName}
-                onChange={(e) =>
-                  handleInputChange(
-                    'lastName',
-                    e.target.value
-                  )
-                }
-                className="w-full border border-gray-300 rounded-md px-4 py-3 bg-white outline-none"
-              />
-            </div>
           </div>
 
-          {/* COMPANY */}
-          <div>
-            <label className="block text-sm font-bold mb-2">
-              Company name
-            </label>
-
-            <input
-              type="text"
-              value={billingData.company}
-              onChange={(e) =>
-                handleInputChange(
-                  'company',
-                  e.target.value
-                )
-              }
-              className="w-full border border-gray-300 rounded-md px-4 py-3 bg-white outline-none"
-            />
-          </div>
-
-          {/* COUNTRY */}
-          <div>
-            <label className="block text-sm font-bold mb-2">
-              Country
-            </label>
-
-            <select
-              value={billingData.country}
-              onChange={(e) =>
-                handleInputChange(
-                  'country',
-                  e.target.value
-                )
-              }
-              className="w-full border border-gray-300 rounded-md px-4 py-3 bg-white outline-none"
-            >
-              <option>India</option>
-              <option>United States</option>
-              <option>United Kingdom</option>
-            </select>
-          </div>
-
-          {/* ADDRESS */}
-          <div>
-            <label className="block text-sm font-bold mb-2">
-              Street Address
-            </label>
-
-            <input
-              type="text"
-              placeholder="House number and street name"
-              value={billingData.address1}
-              onChange={(e) =>
-                handleInputChange(
-                  'address1',
-                  e.target.value
-                )
-              }
-              className="w-full border border-gray-300 rounded-md px-4 py-3 bg-white outline-none mb-4"
-            />
-
-            <input
-              type="text"
-              placeholder="Apartment, suite, etc."
-              value={billingData.address2}
-              onChange={(e) =>
-                handleInputChange(
-                  'address2',
-                  e.target.value
-                )
-              }
-              className="w-full border border-gray-300 rounded-md px-4 py-3 bg-white outline-none"
-            />
-          </div>
-
-          {/* CITY */}
-          <div>
-            <label className="block text-sm font-bold mb-2">
-              Town / City
-            </label>
-
-            <input
-              type="text"
-              value={billingData.city}
-              onChange={(e) =>
-                handleInputChange(
-                  'city',
-                  e.target.value
-                )
-              }
-              className="w-full border border-gray-300 rounded-md px-4 py-3 bg-white outline-none"
-            />
-          </div>
-
-          {/* STATE */}
-          <div>
-            <label className="block text-sm font-bold mb-2">
-              State
-            </label>
-
-            <input
-              type="text"
-              value={billingData.state}
-              onChange={(e) =>
-                handleInputChange(
-                  'state',
-                  e.target.value
-                )
-              }
-              className="w-full border border-gray-300 rounded-md px-4 py-3 bg-white outline-none"
-            />
-          </div>
-
-          {/* ZIP */}
-          <div>
-            <label className="block text-sm font-bold mb-2">
-              ZIP Code
-            </label>
-
-            <input
-              type="text"
-              value={billingData.zip}
-              onChange={(e) =>
-                handleInputChange(
-                  'zip',
-                  e.target.value
-                )
-              }
-              className="w-full border border-gray-300 rounded-md px-4 py-3 bg-white outline-none"
-            />
-          </div>
-
-          {/* PHONE */}
-          <div>
-            <label className="block text-sm font-bold mb-2">
-              Phone
-            </label>
-
-            <input
-              type="tel"
-              value={billingData.phone}
-              onChange={(e) =>
-                handleInputChange(
-                  'phone',
-                  e.target.value
-                )
-              }
-              className="w-full border border-gray-300 rounded-md px-4 py-3 bg-white outline-none"
-            />
-          </div>
-
-          {/* EMAIL */}
-          <div>
-            <label className="block text-sm font-bold mb-2">
-              Email
-            </label>
-
-            <input
-              type="email"
-              value={billingData.email}
-              onChange={(e) =>
-                handleInputChange(
-                  'email',
-                  e.target.value
-                )
-              }
-              className="w-full border border-gray-300 rounded-md px-4 py-3 bg-white outline-none"
-            />
-          </div>
-
-          {/* NOTES */}
-          <div>
-            <label className="block text-sm font-bold mb-2">
-              Order Notes
-            </label>
-
-            <textarea
-              rows={4}
-              value={billingData.notes}
-              onChange={(e) =>
-                handleInputChange(
-                  'notes',
-                  e.target.value
-                )
-              }
-              className="w-full border border-gray-300 rounded-md px-4 py-3 bg-white outline-none resize-none"
-            />
-          </div>
         </div>
       </div>
 
@@ -519,6 +353,54 @@ export default function CheckoutClient() {
             ))}
           </div>
 
+          {/* Coupon input in sidebar */}
+          { true/*!detailsSaved*/ && (
+            <div className="my-5 ">
+              {true/*!appliedCoupon*/ ? (
+                <div>
+                  <div className="flex gap-2">
+                    <input
+                      type="text"
+                      // value={couponInput}
+                      // onChange={(e) => { setCouponInput(e.target.value.toUpperCase()); setCouponError(''); }}
+                      // onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); void handleApplyCoupon(); } }}
+                      placeholder="Coupon code"
+                      className="flex-1 rounded-2xl border border-gray-200 bg-[rgba(248,250,252,0.78)] px-3 py-2.5 text-sm font-medium text-gray-900 placeholder:text-gray-400 focus:border-[var(--theme-primary)] focus:outline-none focus:ring-2 focus:ring-[rgba(var(--theme-primary-rgb),0.12)]"
+                    />
+                    <button
+                      type="button"
+                      // onClick={handleApplyCoupon}
+                      // disabled={!couponInput.trim() || couponValidating}
+                      className="shrink-0 rounded-2xl border border-gray-200 bg-white px-4 py-2.5 text-sm font-semibold text-gray-700 transition hover:bg-gray-50 disabled:opacity-40"
+                    >
+                      {/*{couponValidating ? '...' : 'Apply'}*/}
+                      Apply
+                    </button>
+                  </div>
+                  {true/*couponError*/ && 
+                    <p className="mt-1.5 text-xs text-red-600">
+                      {/*{couponError}*/}
+                      errormessage
+                    </p>
+                  }
+                </div>
+              ) : (
+                <div className="flex items-center justify-between rounded-2xl border border-emerald-200 bg-emerald-50 px-3 py-2.5">
+                  <div className="flex items-center gap-2">
+                    <CheckCircle2 className="h-4 w-4 shrink-0 text-emerald-600" />
+                    <div>
+                      <p className="text-sm font-semibold text-emerald-800">{appliedCoupon.code}</p>
+                      <p className="text-xs text-emerald-700">{appliedCoupon.message}</p>
+                    </div>
+                  </div>
+                  <button type="button" onClick={handleRemoveCoupon} className="ml-2 text-emerald-600 hover:text-emerald-800">
+                    <X className="h-4 w-4" />
+                  </button>
+                </div>
+              )}
+            </div>
+          )}
+
           {/* SUBTOTAL */}
           <div className="flex justify-between border-b border-gray-200 pb-4 mb-4">
             <span className="font-bold">
@@ -528,63 +410,6 @@ export default function CheckoutClient() {
             <span className="font-bold">
               ${subtotal.toFixed(2)}
             </span>
-          </div>
-
-          {/* SHIPPING */}
-          <div className="border-b border-gray-200 pb-4 mb-4">
-
-            <h3 className="font-bold mb-4">
-              Shipping
-            </h3>
-
-            <div className="space-y-3">
-
-              <label className="flex items-center justify-between">
-
-                <div className="flex items-center gap-3">
-                  <input
-                    type="radio"
-                    checked={
-                      shippingMethod ===
-                      'free'
-                    }
-                    onChange={() =>
-                      setShippingMethod(
-                        'free'
-                      )
-                    }
-                  />
-
-                  <span>
-                    Free Shipping
-                  </span>
-                </div>
-              </label>
-
-              <label className="flex items-center justify-between">
-
-                <div className="flex items-center gap-3">
-                  <input
-                    type="radio"
-                    checked={
-                      shippingMethod ===
-                      'flat'
-                    }
-                    onChange={() =>
-                      setShippingMethod(
-                        'flat'
-                      )
-                    }
-                  />
-
-                  <span>
-                    Flat Rate
-                  </span>
-                </div>
-
-                <span>$25.75</span>
-              </label>
-            </div>
           </div>
 
           {/* TOTAL */}
@@ -597,67 +422,6 @@ export default function CheckoutClient() {
             <span className="text-2xl font-extrabold">
               ${finalTotal.toFixed(2)}
             </span>
-          </div>
-
-          {/* PAYMENT */}
-          <div className="space-y-4 mb-6">
-
-            <label className="flex items-center gap-3">
-              <input
-                type="radio"
-                checked={
-                  paymentMethod ===
-                  'bank'
-                }
-                onChange={() =>
-                  setPaymentMethod(
-                    'bank'
-                  )
-                }
-              />
-
-              <span className="font-bold">
-                Direct Bank Transfer
-              </span>
-            </label>
-
-            <label className="flex items-center gap-3">
-              <input
-                type="radio"
-                checked={
-                  paymentMethod ===
-                  'cod'
-                }
-                onChange={() =>
-                  setPaymentMethod(
-                    'cod'
-                  )
-                }
-              />
-
-              <span className="font-bold">
-                Cash on Delivery
-              </span>
-            </label>
-
-            <label className="flex items-center gap-3">
-              <input
-                type="radio"
-                checked={
-                  paymentMethod ===
-                  'paypal'
-                }
-                onChange={() =>
-                  setPaymentMethod(
-                    'paypal'
-                  )
-                }
-              />
-
-              <span className="font-bold">
-                PayPal
-              </span>
-            </label>
           </div>
 
           {/* TERMS */}
