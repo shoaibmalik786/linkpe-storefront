@@ -20,8 +20,8 @@ export default async function CheckoutPage() {
       ])
     : [null, []];
 
-  const bannerUrl =
-    store?.store_banner_url ?? null;
+  const bannerUrl = store?.store_banner_url ?? null;
+  const storeName = store?.business_name ?? 'Store';
 
   return (
     <main className="min-h-screen bg-[#fefcfa] text-gray-900 pb-24">
@@ -40,7 +40,7 @@ export default async function CheckoutPage() {
 
         <div className="relative z-10 text-center text-white px-4">
           <h1 className="text-3xl md:text-5xl font-extrabold mb-4">
-            Shop Checkout
+            {storeName}
           </h1>
         </div>
       </section>
