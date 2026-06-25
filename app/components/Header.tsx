@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { Search, ChevronDown, Heart, ShoppingBag } from 'lucide-react';
+import { Search, ChevronDown, Heart, ShoppingBag, PackageSearch } from 'lucide-react';
 import Link from 'next/link';
 import type { Store, Category } from '@linkpe-storefront/sdk';
 import { cartCount, CART_CHANGED_EVENT } from '@/lib/cart';
@@ -133,8 +133,24 @@ export default function Header({ store, categories = [] }: { store?: Store | nul
 
         {/* Icons — sit on the dark band, so light with an accent hover */}
         <div className="flex items-center gap-5 shrink-0">
-          <Link href="/cart" className="relative text-white hover:text-white/70 transition-colors">
+          {/* Track Order */}
+          <Link
+            href="/track-order"
+            className="flex items-center gap-2 text-white hover:text-white/70 transition-colors"
+          >
+            <PackageSearch size={24} strokeWidth={2} />
+            <span className="hidden md:block text-sm font-medium">
+              Track Order
+            </span>
+          </Link>
+
+          {/* Cart */}
+          <Link
+            href="/cart"
+            className="relative text-white hover:text-white/70 transition-colors"
+          >
             <ShoppingBag size={24} strokeWidth={2} />
+
             <span className="absolute -top-2 -right-2 bg-white text-brand-dark text-[10px] font-bold w-[18px] h-[18px] rounded-full flex items-center justify-center">
               {count}
             </span>

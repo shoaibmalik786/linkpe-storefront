@@ -32,7 +32,6 @@ export function readCart(): CartLine[] {
     const raw = window.localStorage.getItem(KEY);
     const parsed = raw ? JSON.parse(raw) : [];
 
-    console.log("prased data", parsed);
     return Array.isArray(parsed) ? (parsed as CartLine[]) : [];
   } catch {
     return [];

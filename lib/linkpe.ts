@@ -9,6 +9,7 @@ import { cache } from 'react';
 import { LinkpeClient, LinkpeNotFoundError } from '@linkpe-storefront/sdk';
 import type {
   Category,
+  CustomerOrder,
   ProductDetail,
   ProductListParams,
   ProductListResult,
@@ -85,4 +86,12 @@ export async function getProductReviews(productId: string, limit = 20): Promise<
 
 export async function getStoreReviews(limit = 20): Promise<StoreReviewsResponse> {
   return linkpe().reviews.listStore({ limit });
+}
+
+export async function trackOrders(phoneNumber: string) {
+  return linkpe().trackOrders.get(phoneNumber);
+}
+
+export async function trackOrder(slug: string, phone: string) {
+  return linkpe().trackOrders.getOrder(slug, { phone });
 }
