@@ -50,6 +50,16 @@
   --bs-btn-disabled-color: #ffffff;
   --bs-btn-disabled-bg: #CC0D39;
   --bs-btn-disabled-border-color: #CC0D39;
+  --theme-primary: #000000;
+  --theme-primary-rgb: 0, 0, 0;
+  --theme-primary-soft: rgba(0, 0, 0, 0.04);
+  --theme-primary-soft-border: rgba(0, 0, 0, 0.10);
+  --theme-primary-gradient:
+    linear-gradient(
+      135deg,
+      rgba(0, 0, 0, 0.08),
+      rgba(0, 0, 0, 0.02)
+    );
 }
 
 @theme inline {

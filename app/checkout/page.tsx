@@ -45,7 +45,7 @@ export default async function CheckoutPage() {
         </div>
       </section>
 
-      <CheckoutClient />
+      <CheckoutClient store={store} />
 
       <SiteFooter />
     </main>

@@ -9,6 +9,7 @@ import { cache } from 'react';
 import { LinkpeClient, LinkpeNotFoundError } from '@linkpe-storefront/sdk';
 import type {
   Category,
+  CheckoutInitiateInput,
   CustomerOrder,
   ProductDetail,
   ProductListParams,
@@ -16,6 +17,7 @@ import type {
   ProductReviewsResponse,
   Store,
   StoreReviewsResponse,
+  VerifyPaymentInput,
 } from '@linkpe-storefront/sdk';
 
 let cachedClient: LinkpeClient | null = null;
@@ -94,4 +96,19 @@ export async function trackOrders(phoneNumber: string) {
 
 export async function trackOrder(slug: string, phone: string) {
   return linkpe().trackOrders.getOrder(slug, { phone });
+}
+
+export async function lookupBuyerAddress(phone: string) {
+  return linkpe().buyer.lookupAddress(phone);
+}
+
+export async function createOrder(
+  input: CheckoutInitiateInput,
+  idempotencyKey?: string
+) {
+  return linkpe().orders.create(input, { idempotencyKey });
+}
+
+export async function verifyOrderPayment(input: VerifyPaymentInput) {
+  return linkpe().orders.verifyPayment(input);
 }

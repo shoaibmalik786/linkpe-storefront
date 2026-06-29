@@ -99,4 +99,8 @@ export function removeCartItem(productId: string): void {
   writeCart(updated);
 }
 
+export function clearCart(): void {
+  writeCart([]);
+}
+
 export const CART_CHANGED_EVENT = EVENT;

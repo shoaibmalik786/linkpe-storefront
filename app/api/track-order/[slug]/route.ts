@@ -35,7 +35,7 @@ export async function POST(request: Request, { params }: Params) {
   } catch (err: any) {
     return NextResponse.json(
       { error: err?.message || 'Failed to track order' },
-      { status: 500 }
+      { status: err?.status || 500 }
     );
   }
 }

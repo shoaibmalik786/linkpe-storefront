@@ -1,11 +1,8 @@
 'use client';
 
 import { useState } from 'react';
-
 import Link from 'next/link';
-
 import { useRouter } from 'next/navigation';
-
 import {
   ArrowRight,
   LoaderCircle,
@@ -13,7 +10,6 @@ import {
   Search,
   Truck,
 } from 'lucide-react';
-
 import { formatCurrency } from '@/lib/utils/format';
 
 type Props = {
@@ -78,29 +74,20 @@ export default function TrackOrderClient({
   store,
 }: Props) {
   const router = useRouter();
-
   const [phoneNumber, setPhoneNumber] = useState('');
-
   const [loading, setLoading] = useState(false);
-
   const [orders, setOrders] = useState<Order[]>([]);
-
   const [error, setError] = useState('');
 
   async function handleTrack(e: React.FormEvent) {
     e.preventDefault();
-
     setLoading(true);
-
     setError('');
-
     setOrders([]);
 
     if (!/^\d{10}$/.test(phoneNumber)) {
       setError('Please enter a valid 10-digit mobile number');
-
       setLoading(false);
-
       return;
     }
 

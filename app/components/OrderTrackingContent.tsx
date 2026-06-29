@@ -29,22 +29,28 @@ type OrderItem = {
 };
 
 type Shipment = {
-  id: string;
-  status: string;
+  id?: string;
+  status?: string | null;
   awb_code?: string | null;
+  tracking_number?: string | null;
+  carrier?: string | null;
   courier_name?: string | null;
   tracking_url?: string | null;
   expected_delivery_date?: string | null;
+  estimated_delivery_date?: string | null;
   out_for_delivery_at?: string | null;
   delivered_at?: string | null;
+  shipped_at?: string | null;
   picked_up_at?: string | null;
   in_transit_at?: string | null;
   pickup_scheduled_at?: string | null;
-  created_at: string;
+  provider_status?: string | null;
+  current_status_description?: string | null;
+  created_at?: string;
 } | null;
 
 type TrackingEvent = {
-  id: string;
+  id?: string;
   status: string;
   activity?: string | null;
   location?: string | null;
@@ -101,6 +107,81 @@ function fmtDate(dateStr?: string | null) {
     month: 'long',
     year: 'numeric',
   });
+}
+
+function normalizeShipmentStatus(status?: string | null, providerStatus?: string | null) {
+  const currentStatus = status?.trim();
+
+  if (
+    currentStatus &&
+    [
+      'picked_up',
+      'in_transit',
+      'out_for_delivery',
+      'delivered',
+      'label_generated',
+      'pickup_scheduled',
+    ].includes(currentStatus)
+  ) {
+    return currentStatus;
+  }
+
+  const normalizedProviderStatus = providerStatus
+    ?.trim()
+    .toUpperCase()
+    .replace(/[\s-]+/g, '_');
+
+  const statusMap: Record<string, string> = {
+    PICKED_UP: 'picked_up',
+    PICKUP_COMPLETED: 'picked_up',
+    SHIPMENT_PICKED_UP: 'picked_up',
+    SHIPPED: 'in_transit',
+    IN_TRANSIT: 'in_transit',
+    OUT_FOR_PICKUP: 'in_transit',
+    OUT_FOR_DELIVERY: 'out_for_delivery',
+    DELIVERED: 'delivered',
+  };
+
+  return normalizedProviderStatus
+    ? (statusMap[normalizedProviderStatus] ?? currentStatus ?? '')
+    : (currentStatus ?? '');
+}
+
+function normalizeShipment(shipment: Shipment): Shipment {
+  if (!shipment) return null;
+
+  const awbCode = shipment.awb_code ?? shipment.tracking_number ?? null;
+  const status = normalizeShipmentStatus(
+    shipment.status,
+    shipment.provider_status ?? shipment.current_status_description
+  );
+  const hasShipmentSignal =
+    !!awbCode ||
+    !!status ||
+    !!shipment.tracking_url ||
+    !!shipment.courier_name ||
+    !!shipment.carrier ||
+    !!shipment.shipped_at ||
+    !!shipment.delivered_at ||
+    !!shipment.estimated_delivery_date ||
+    !!shipment.expected_delivery_date;
+
+  if (!hasShipmentSignal) return null;
+
+  return {
+    ...shipment,
+    status: shipment.delivered_at
+      ? 'delivered'
+      : status || (shipment.shipped_at ? 'in_transit' : ''),
+    awb_code: awbCode,
+    courier_name: shipment.courier_name ?? shipment.carrier ?? null,
+    expected_delivery_date:
+      shipment.expected_delivery_date ??
+      shipment.estimated_delivery_date ??
+      null,
+    picked_up_at: shipment.picked_up_at ?? shipment.shipped_at ?? null,
+    in_transit_at: shipment.in_transit_at ?? shipment.shipped_at ?? null,
+  };
 }
 
 function buildSteps(order: Order, shipment: Shipment): Step[] {
@@ -261,15 +342,13 @@ export default function OrderTrackingContent({
           }),
         });
 
-        const json = await res.json();
+        const data = await res.json();
 
         if (!res.ok) {
           throw new Error(
-            json?.error || 'Failed to fetch order'
+            data?.error || 'Failed to fetch order'
           );
         }
-
-        const data = json?.data;
 
         setOrder({
           id: data.id,
@@ -285,8 +364,9 @@ export default function OrderTrackingContent({
           cart_items: data.cart_items,
         });
 
-        setShipment(data.shipping || null);
-
+        setShipment(
+          normalizeShipment(data.shipment || data.shipping || null)
+        );
         setTrackingEvents(data.tracking_events || []);
       } catch (e: any) {
         setError(e.message);
@@ -445,7 +525,7 @@ export default function OrderTrackingContent({
               className="text-sm font-semibold"
               style={{
                 color:
-                  'var(--theme-primary-foreground)',
+                  'var(--theme-primary-foreground, #ffffff)',
               }}
             >
               {currentStep.label}
@@ -519,6 +599,14 @@ export default function OrderTrackingContent({
                             ? 'border-[var(--theme-primary)] bg-white text-[var(--theme-primary)]'
                             : 'border-neutral-200 bg-white text-neutral-300'
                       }`}
+                      style={
+                        step.status === 'done'
+                          ? {
+                              color:
+                                'var(--theme-primary-foreground, #ffffff)',
+                            }
+                          : undefined
+                      }
                     >
                       {step.status === 'done' ? (
                         <Check className="h-5 w-5" />
@@ -596,7 +684,7 @@ export default function OrderTrackingContent({
           <div className="mt-5 space-y-4">
             {trackingEvents.map((event, index) => (
               <div
-                key={event.id}
+                key={event.id ?? `${event.status}-${event.event_time ?? index}`}
                 className="flex gap-4"
               >
                 <div className="flex flex-col items-center">
